@@ -1,0 +1,677 @@
+/* --- 1. GLOBAL VARIABLES & RESET --- */
+:root {
+    --inst-bg: #0a192f;
+    --inst-accent: #00d4ff;
+    --inst-text: #e6f1ff;
+    
+    --school-bg: #0f2e22;
+    --school-accent: #50c878;
+    --school-gold: #ffd700;
+    
+    --speed: 0.8s;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.2);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+}
+
+body { 
+    overflow-x: hidden; 
+    background: #000; 
+    line-height: 1.6;
+}
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Utility Classes */
+.hidden { display: none; }
+.btn { cursor: pointer; transition: all 0.3s ease; }
+
+/* --- 2. SPLIT LANDING PAGE (The Gateway) --- */
+.gateway-container {
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100vh;
+    z-index: 100;
+    display: flex;
+    transition: transform var(--speed) cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* The "Curtain Up" Effect */
+.gateway-container.slide-up {
+    transform: translateY(-100%);
+}
+
+.split {
+    position: relative;
+    width: 50%; 
+    height: 100%;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    text-align: center;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    cursor: pointer;
+}
+
+/* Left (Institute) Styling */
+.split.left { 
+    background: linear-gradient(135deg, rgba(10, 25, 47, 0.95), rgba(10, 25, 47, 0.85)), 
+                url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1000');
+    background-size: cover; 
+    background-position: center;
+    color: white; 
+    border-right: 2px solid rgba(0, 212, 255, 0.3);
+}
+
+/* Right (School) Styling */
+.split.right { 
+    background: linear-gradient(135deg, rgba(15, 46, 34, 0.95), rgba(15, 46, 34, 0.85)), 
+                url('https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1000');
+    background-size: cover; 
+    background-position: center;
+    color: white;
+}
+
+/* Hover Effects with Smooth Transitions */
+.split:hover { 
+    width: 60%; 
+}
+
+.gateway-container:has(.split.left:hover) .split.right { 
+    width: 40%; 
+}
+
+.gateway-container:has(.split.right:hover) .split.left { 
+    width: 40%; 
+}
+
+.landing-content {
+    transform: scale(0.95);
+    transition: transform 0.5s ease;
+    padding: 20px;
+}
+
+.split:hover .landing-content {
+    transform: scale(1);
+}
+
+.landing-content h1 { 
+    font-size: 3.5rem; 
+    text-transform: uppercase; 
+    letter-spacing: 3px; 
+    margin-bottom: 15px;
+    font-weight: 800;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+    animation: fadeInUp 0.8s ease;
+}
+
+.landing-content p {
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+.landing-content span { 
+    font-weight: 800; 
+}
+
+.left span { 
+    color: var(--inst-accent);
+    text-shadow: 0 0 20px var(--inst-accent);
+}
+
+.right span { 
+    color: var(--school-accent);
+    text-shadow: 0 0 20px var(--school-accent);
+}
+
+.cta-btn {
+    padding: 16px 45px; 
+    border: 2px solid white; 
+    color: white; 
+    text-decoration: none;
+    text-transform: uppercase; 
+    letter-spacing: 2px; 
+    font-weight: bold; 
+    margin-top: 25px;
+    display: inline-block; 
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+.cta-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.cta-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.split.left .cta-btn:hover { 
+    background: var(--inst-accent); 
+    border-color: var(--inst-accent); 
+    color: #000; 
+    box-shadow: 0 0 30px var(--inst-accent);
+    transform: translateY(-3px);
+}
+
+.split.right .cta-btn:hover { 
+    background: var(--school-accent); 
+    border-color: var(--school-accent); 
+    color: #000; 
+    box-shadow: 0 0 30px var(--school-accent);
+    transform: translateY(-3px);
+}
+
+/* Icon Animation */
+.landing-content i {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- 3. INTERNAL PAGES WRAPPER --- */
+.main-content {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    opacity: 0;
+    transition: opacity 1s ease;
+    pointer-events: none;
+}
+
+.main-content.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Back Button */
+.back-btn {
+    position: fixed; 
+    top: 25px; 
+    left: 50%; 
+    transform: translateX(-50%);
+    z-index: 999; 
+    background: white; 
+    color: black; 
+    padding: 12px 35px;
+    border-radius: 50px; 
+    font-weight: bold; 
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    display: none;
+    border: none;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    transform: translateX(-50%) translateY(-2px);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+}
+
+.back-btn.show { 
+    display: block; 
+    animation: slideDown 0.5s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* --- 4. INSTITUTE PAGE DESIGN (JEE/NEET) --- */
+#institute-page { 
+    background-color: var(--inst-bg); 
+    color: var(--inst-text); 
+    min-height: 100vh; 
+    display: none; 
+}
+
+.inst-nav { 
+    padding: 25px 50px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    border-bottom: 1px solid rgba(0,212,255,0.15);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(10, 25, 47, 0.95);
+}
+
+.inst-logo { 
+    font-size: 1.6rem; 
+    font-weight: bold; 
+    color: var(--inst-accent); 
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px var(--inst-accent);
+}
+
+.inst-nav > div:last-child span {
+    cursor: pointer;
+    transition: color 0.3s ease;
+    padding: 8px 15px;
+    border-radius: 4px;
+}
+
+.inst-nav > div:last-child span:hover {
+    color: var(--inst-accent);
+    background: rgba(0,212,255,0.1);
+}
+
+.hero-section { 
+    padding: 100px 50px; 
+    display: flex; 
+    align-items: center; 
+    gap: 60px;
+    animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.hero-text h4 {
+    color: var(--inst-accent);
+    letter-spacing: 3px;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.hero-text h2 { 
+    font-size: 4.5rem; 
+    line-height: 1.1; 
+    margin-bottom: 25px; 
+    background: linear-gradient(135deg, #fff, var(--inst-accent)); 
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: slideInLeft 0.8s ease;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.stats-grid { 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 25px; 
+    margin-top: 50px; 
+}
+
+.stat-card { 
+    background: rgba(255,255,255,0.05); 
+    padding: 25px; 
+    border-left: 4px solid var(--inst-accent);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.stat-card:hover {
+    background: rgba(255,255,255,0.08);
+    transform: translateX(10px);
+    box-shadow: var(--shadow-md);
+}
+
+.stat-num { 
+    font-size: 2.8rem; 
+    font-weight: bold; 
+    color: white;
+    margin-bottom: 5px;
+}
+
+.courses-section { 
+    padding: 80px 50px;
+    background: rgba(0,0,0,0.2);
+}
+
+.courses-section h3 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: white;
+}
+
+.course-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+    gap: 35px; 
+    margin-top: 40px; 
+}
+
+.course-card { 
+    background: linear-gradient(135deg, #112240, #0a192f); 
+    padding: 35px; 
+    border-radius: 12px; 
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+    border: 1px solid rgba(0,212,255,0.2); 
+    position: relative; 
+    overflow: hidden;
+}
+
+.course-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, transparent, rgba(0,212,255,0.1));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.course-card:hover::before {
+    opacity: 1;
+}
+
+.course-card:hover { 
+    transform: translateY(-12px); 
+    border-color: var(--inst-accent);
+    box-shadow: 0 15px 40px rgba(0,212,255,0.3);
+}
+
+.badge { 
+    position: absolute; 
+    top: 15px; 
+    right: 15px; 
+    background: var(--inst-accent); 
+    color: black; 
+    padding: 6px 14px; 
+    font-size: 0.75rem; 
+    font-weight: bold;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 12px rgba(0,212,255,0.4);
+}
+
+.course-card h3 {
+    position: relative;
+    z-index: 1;
+}
+
+.course-card a {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.course-card a:hover {
+    transform: translateX(5px);
+}
+
+/* --- 5. SCHOOL PAGE DESIGN (International) --- */
+#school-page { 
+    background-color: var(--school-bg); 
+    color: #f0fdf4; 
+    min-height: 100vh; 
+    display: none; 
+}
+
+.school-nav { 
+    padding: 25px 50px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    background: rgba(0,0,0,0.3); 
+    backdrop-filter: blur(15px);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.school-logo { 
+    font-size: 1.6rem; 
+    font-weight: bold; 
+    color: var(--school-accent); 
+    font-family: 'Georgia', serif;
+    text-shadow: 0 0 10px var(--school-accent);
+}
+
+.school-nav > div:last-child span {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 8px 15px;
+    border-radius: 4px;
+}
+
+.school-nav > div:last-child span:hover {
+    color: var(--school-accent);
+    background: rgba(80,200,120,0.1);
+}
+
+.school-hero { 
+    height: 85vh; 
+    background: url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1500') center/cover; 
+    position: relative; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    text-align: center;
+}
+
+.school-hero::after { 
+    content:''; 
+    position: absolute; 
+    inset: 0; 
+    background: linear-gradient(135deg, rgba(15, 46, 34, 0.8), rgba(15, 46, 34, 0.6));
+}
+
+.hero-content { 
+    position: relative; 
+    z-index: 2; 
+    max-width: 900px;
+    padding: 20px;
+    animation: fadeInUp 1s ease;
+}
+
+.hero-content h2 { 
+    font-size: 4rem; 
+    font-family: 'Georgia', serif; 
+    margin-bottom: 25px; 
+    color: var(--school-gold);
+    text-shadow: 2px 2px 12px rgba(0,0,0,0.5);
+    line-height: 1.2;
+}
+
+.hero-content button {
+    background: var(--school-gold);
+    border: none;
+    padding: 16px 45px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: var(--shadow-md);
+}
+
+.hero-content button:hover {
+    background: #ffed4e;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255,215,0,0.4);
+}
+
+.values-section { 
+    padding: 100px 50px; 
+    background: linear-gradient(135deg, #0b2219, #0f2e22);
+}
+
+.values-section > div:first-child {
+    animation: fadeIn 1s ease;
+}
+
+.value-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 50px; 
+    text-align: center;
+    margin-top: 20px;
+}
+
+.value-card {
+    padding: 30px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 12px;
+    transition: all 0.4s ease;
+    border: 1px solid transparent;
+}
+
+.value-card:hover {
+    background: rgba(255,255,255,0.06);
+    transform: translateY(-10px);
+    border-color: var(--school-accent);
+    box-shadow: 0 15px 40px rgba(80,200,120,0.2);
+}
+
+.value-card i { 
+    color: var(--school-accent); 
+    font-size: 3.5rem; 
+    margin-bottom: 25px;
+    transition: transform 0.3s ease;
+}
+
+.value-card:hover i {
+    transform: scale(1.1);
+}
+
+.value-card h3 { 
+    color: var(--school-gold); 
+    margin-bottom: 15px; 
+    font-size: 1.6rem;
+    font-family: 'Georgia', serif;
+}
+
+/* Loading Animation */
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .hero-text h2 { font-size: 3.5rem; }
+    .hero-content h2 { font-size: 3rem; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .gateway-container { flex-direction: column; }
+    .split { 
+        width: 100% !important; 
+        height: 50%;
+    }
+    .split:hover { 
+        width: 100% !important; 
+        height: 55%;
+    }
+    .landing-content h1 { font-size: 2.5rem; }
+    .hero-section { 
+        flex-direction: column; 
+        padding: 60px 30px;
+    }
+    .hero-text h2 { font-size: 2.5rem; }
+    .hero-content h2 { font-size: 2.2rem; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .value-grid { grid-template-columns: 1fr; }
+    .inst-nav, .school-nav { 
+        padding: 20px 25px;
+        flex-direction: column;
+        gap: 15px;
+    }
+    .courses-section, .values-section {
+        padding: 60px 30px;
+    }
+    .back-btn {
+        padding: 10px 25px;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .landing-content h1 { font-size: 2rem; }
+    .hero-text h2 { font-size: 2rem; }
+    .hero-content h2 { font-size: 1.8rem; }
+    .cta-btn { padding: 12px 30px; }
+    .course-grid { grid-template-columns: 1fr; }
+}
+
+/* Accessibility Improvements */
+.cta-btn:focus,
+.back-btn:focus,
+.hero-content button:focus {
+    outline: 3px solid currentColor;
+    outline-offset: 3px;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
