@@ -1,102 +1,710 @@
-/* --- 1. GLOBAL VARIABLES & RESET --- */
+/* ============================================
+   ELIXIR EDUCATION ECOSYSTEM - COMPLETE STYLES
+   ============================================ */
+
+/* --- 1. CSS VARIABLES & RESET --- */
 :root {
     --inst-bg: #0a192f;
     --inst-accent: #00d4ff;
     --inst-text: #e6f1ff;
+    --inst-secondary: #8892b0;
     
     --school-bg: #0f2e22;
     --school-accent: #50c878;
     --school-gold: #ffd700;
+    --school-text: #f0fdf4;
+    
+    --white: #ffffff;
+    --black: #000000;
+    --gray-100: #f7f7f7;
+    --gray-200: #e5e5e5;
+    --gray-600: #666666;
+    --gray-800: #333333;
     
     --speed: 0.8s;
     --shadow-sm: 0 2px 8px rgba(0,0,0,0.1);
     --shadow-md: 0 4px 16px rgba(0,0,0,0.2);
     --shadow-lg: 0 8px 32px rgba(0,0,0,0.3);
+    --shadow-xl: 0 16px 48px rgba(0,0,0,0.4);
+    
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 20px;
+    --radius-full: 50px;
 }
 
-* { 
-    margin: 0; 
-    padding: 0; 
-    box-sizing: border-box; 
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-body { 
-    overflow-x: hidden; 
-    background: #000; 
-    line-height: 1.6;
-}
-
-/* Smooth Scrolling */
 html {
     scroll-behavior: smooth;
+    font-size: 16px;
 }
 
-/* Utility Classes */
-.hidden { display: none; }
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+    background: var(--black);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* --- 2. ACCESSIBILITY & UTILITIES --- */
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--white);
+    color: var(--black);
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    z-index: 10000;
+    font-weight: bold;
+    transition: top 0.3s;
+}
+
+.skip-link:focus {
+    top: 10px;
+}
+
+.hidden { display: none !important; }
 .btn { cursor: pointer; transition: all 0.3s ease; }
 
-/* --- 2. SPLIT LANDING PAGE (The Gateway) --- */
+/* Focus Styles */
+:focus-visible {
+    outline: 3px solid var(--inst-accent);
+    outline-offset: 3px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* --- 3. SCROLL PROGRESS INDICATOR --- */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    background: linear-gradient(90deg, var(--inst-accent), var(--school-accent));
+    z-index: 9999;
+    transform: scaleX(0);
+    transform-origin: left;
+    will-change: transform;
+}
+
+/* --- 4. COOKIE CONSENT BANNER --- */
+.cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(10, 25, 47, 0.98);
+    padding: 20px;
+    z-index: 9998;
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(0, 212, 255, 0.2);
+    animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+
+.cookie-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.cookie-content p {
+    color: var(--inst-text);
+    flex: 1;
+}
+
+.cookie-content i {
+    color: var(--inst-accent);
+    margin-right: 10px;
+}
+
+.cookie-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.cookie-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--radius-full);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.cookie-btn.accept {
+    background: var(--inst-accent);
+    color: var(--black);
+}
+
+.cookie-btn.decline {
+    background: transparent;
+    color: var(--inst-text);
+    border: 1px solid var(--inst-secondary);
+}
+
+.cookie-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* --- 5. WHATSAPP FLOATING BUTTON --- */
+.whatsapp-float {
+    position: fixed;
+    bottom: 100px;
+    right: 25px;
+    width: 60px;
+    height: 60px;
+    background: #25D366;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    z-index: 1000;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+}
+
+.whatsapp-float::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #25D366;
+    animation: pulse-ring 1.5s infinite;
+    z-index: -1;
+}
+
+@keyframes pulse-ring {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* --- 6. CHAT WIDGET --- */
+.chat-widget {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 350px;
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    z-index: 999;
+    overflow: hidden;
+}
+
+.chat-header {
+    background: linear-gradient(135deg, var(--inst-bg), #112240);
+    color: var(--white);
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.chat-header i:first-child {
+    font-size: 1.2rem;
+}
+
+.chat-header span {
+    flex: 1;
+    font-weight: 600;
+}
+
+.chat-toggle-icon {
+    transition: transform 0.3s;
+}
+
+.chat-body.hidden + .chat-header .chat-toggle-icon,
+.chat-widget:has(.chat-body.hidden) .chat-toggle-icon {
+    transform: rotate(180deg);
+}
+
+.chat-body {
+    max-height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    max-height: 250px;
+    background: var(--gray-100);
+}
+
+.chat-message {
+    margin-bottom: 12px;
+    max-width: 85%;
+}
+
+.chat-message.bot {
+    background: var(--white);
+    padding: 12px 15px;
+    border-radius: 0 var(--radius-lg) var(--radius-lg) var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.chat-message.user {
+    background: var(--inst-accent);
+    color: var(--black);
+    padding: 12px 15px;
+    border-radius: var(--radius-lg) 0 var(--radius-lg) var(--radius-lg);
+    margin-left: auto;
+}
+
+.chat-quick-replies {
+    padding: 10px 15px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--gray-200);
+}
+
+.chat-quick-replies button {
+    padding: 6px 12px;
+    background: var(--gray-100);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.chat-quick-replies button:hover {
+    background: var(--inst-accent);
+    border-color: var(--inst-accent);
+    color: var(--black);
+}
+
+.chat-input {
+    display: flex;
+    padding: 10px 15px;
+    gap: 10px;
+    border-top: 1px solid var(--gray-200);
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-full);
+    outline: none;
+}
+
+.chat-input input:focus {
+    border-color: var(--inst-accent);
+}
+
+.chat-input button {
+    width: 40px;
+    height: 40px;
+    background: var(--inst-accent);
+    color: var(--black);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.chat-input button:hover {
+    transform: scale(1.1);
+}
+
+/* --- 7. MODAL STYLES --- */
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    position: relative;
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    max-width: 500px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: modalIn 0.3s ease;
+}
+
+@keyframes modalIn {
+    from { opacity: 0; transform: scale(0.9) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 35px;
+    height: 35px;
+    background: var(--gray-100);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    z-index: 10;
+}
+
+.modal-close:hover {
+    background: var(--gray-200);
+    transform: rotate(90deg);
+}
+
+/* --- 8. INQUIRY FORM --- */
+.inquiry-form {
+    padding: 30px;
+}
+
+.inquiry-form h3 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: var(--inst-bg);
+    font-size: 1.5rem;
+}
+
+.inquiry-form h3 i {
+    color: var(--inst-accent);
+    margin-right: 10px;
+}
+
+.form-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.progress-step {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: var(--gray-200);
+    color: var(--gray-600);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.progress-step.active {
+    background: var(--inst-accent);
+    color: var(--black);
+}
+
+.progress-step.completed {
+    background: var(--school-accent);
+    color: var(--white);
+}
+
+.progress-line {
+    width: 50px;
+    height: 3px;
+    background: var(--gray-200);
+    margin: 0 5px;
+}
+
+.form-step {
+    display: none;
+}
+
+.form-step.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--gray-800);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--inst-accent);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkbox-group input {
+    width: auto;
+}
+
+.form-nav {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.btn-prev, .btn-next, .btn-submit {
+    padding: 12px 25px;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-prev {
+    background: var(--gray-200);
+    color: var(--gray-800);
+}
+
+.btn-next, .btn-submit {
+    background: var(--inst-accent);
+    color: var(--black);
+    margin-left: auto;
+}
+
+.btn-prev:hover, .btn-next:hover, .btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* --- 9. TOAST NOTIFICATIONS --- */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10001;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    background: var(--white);
+    padding: 15px 20px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 300px;
+    animation: toastIn 0.3s ease;
+}
+
+@keyframes toastIn {
+    from { opacity: 0; transform: translateX(100%); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.toast.success { border-left: 4px solid var(--school-accent); }
+.toast.error { border-left: 4px solid #ef4444; }
+.toast.info { border-left: 4px solid var(--inst-accent); }
+
+.toast i {
+    font-size: 1.2rem;
+}
+
+.toast.success i { color: var(--school-accent); }
+.toast.error i { color: #ef4444; }
+.toast.info i { color: var(--inst-accent); }
+
+.toast-close {
+    margin-left: auto;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--gray-600);
+}
+
+/* --- 10. STICKY CTA BAR --- */
+.sticky-cta {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, var(--inst-bg), #112240);
+    padding: 15px 20px;
+    z-index: 998;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.sticky-cta.show {
+    transform: translateY(0);
+}
+
+.sticky-cta-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.sticky-cta span {
+    color: var(--white);
+    font-weight: 600;
+}
+
+.sticky-cta span i {
+    color: #ef4444;
+    margin-right: 8px;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.sticky-cta button {
+    background: var(--inst-accent);
+    color: var(--black);
+    padding: 12px 25px;
+    border: none;
+    border-radius: var(--radius-full);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sticky-cta button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px var(--inst-accent);
+}
+
+/* --- 11. GATEWAY SPLIT SCREEN --- */
 .gateway-container {
     position: fixed;
-    top: 0; 
-    left: 0; 
-    width: 100%; 
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 100vh;
     z-index: 100;
     display: flex;
     transition: transform var(--speed) cubic-bezier(0.77, 0, 0.175, 1);
 }
 
-/* The "Curtain Up" Effect */
 .gateway-container.slide-up {
     transform: translateY(-100%);
 }
 
 .split {
     position: relative;
-    width: 50%; 
+    width: 50%;
     height: 100%;
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
     transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
     cursor: pointer;
 }
 
-/* Left (Institute) Styling */
-.split.left { 
-    background: linear-gradient(135deg, rgba(10, 25, 47, 0.95), rgba(10, 25, 47, 0.85)), 
+.split.left {
+    background: linear-gradient(135deg, rgba(10, 25, 47, 0.95), rgba(10, 25, 47, 0.85)),
                 url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1000');
-    background-size: cover; 
+    background-size: cover;
     background-position: center;
-    color: white; 
+    color: var(--white);
     border-right: 2px solid rgba(0, 212, 255, 0.3);
 }
 
-/* Right (School) Styling */
-.split.right { 
-    background: linear-gradient(135deg, rgba(15, 46, 34, 0.95), rgba(15, 46, 34, 0.85)), 
+.split.right {
+    background: linear-gradient(135deg, rgba(15, 46, 34, 0.95), rgba(15, 46, 34, 0.85)),
                 url('https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1000');
-    background-size: cover; 
+    background-size: cover;
     background-position: center;
-    color: white;
+    color: var(--white);
 }
 
-/* Hover Effects with Smooth Transitions */
-.split:hover { 
-    width: 60%; 
-}
-
-.gateway-container:has(.split.left:hover) .split.right { 
-    width: 40%; 
-}
-
-.gateway-container:has(.split.right:hover) .split.left { 
-    width: 40%; 
-}
+.split:hover { width: 60%; }
+.gateway-container:has(.split.left:hover) .split.right { width: 40%; }
+.gateway-container:has(.split.right:hover) .split.left { width: 40%; }
 
 .landing-content {
     transform: scale(0.95);
@@ -108,14 +716,13 @@ html {
     transform: scale(1);
 }
 
-.landing-content h1 { 
-    font-size: 3.5rem; 
-    text-transform: uppercase; 
-    letter-spacing: 3px; 
+.landing-content h1 {
+    font-size: 3.5rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
     margin-bottom: 15px;
     font-weight: 800;
     text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
-    animation: fadeInUp 0.8s ease;
 }
 
 .landing-content p {
@@ -125,71 +732,9 @@ html {
     opacity: 0.9;
 }
 
-.landing-content span { 
-    font-weight: 800; 
-}
+.left span { color: var(--inst-accent); text-shadow: 0 0 20px var(--inst-accent); }
+.right span { color: var(--school-accent); text-shadow: 0 0 20px var(--school-accent); }
 
-.left span { 
-    color: var(--inst-accent);
-    text-shadow: 0 0 20px var(--inst-accent);
-}
-
-.right span { 
-    color: var(--school-accent);
-    text-shadow: 0 0 20px var(--school-accent);
-}
-
-.cta-btn {
-    padding: 16px 45px; 
-    border: 2px solid white; 
-    color: white; 
-    text-decoration: none;
-    text-transform: uppercase; 
-    letter-spacing: 2px; 
-    font-weight: bold; 
-    margin-top: 25px;
-    display: inline-block; 
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-    border-radius: 4px;
-}
-
-.cta-btn::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.2);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
-}
-
-.cta-btn:hover::before {
-    width: 300px;
-    height: 300px;
-}
-
-.split.left .cta-btn:hover { 
-    background: var(--inst-accent); 
-    border-color: var(--inst-accent); 
-    color: #000; 
-    box-shadow: 0 0 30px var(--inst-accent);
-    transform: translateY(-3px);
-}
-
-.split.right .cta-btn:hover { 
-    background: var(--school-accent); 
-    border-color: var(--school-accent); 
-    color: #000; 
-    box-shadow: 0 0 30px var(--school-accent);
-    transform: translateY(-3px);
-}
-
-/* Icon Animation */
 .landing-content i {
     animation: float 3s ease-in-out infinite;
 }
@@ -199,18 +744,40 @@ html {
     50% { transform: translateY(-10px); }
 }
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.cta-btn {
+    padding: 16px 45px;
+    border: 2px solid var(--white);
+    color: var(--white);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
+    margin-top: 25px;
+    display: inline-block;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
 }
 
-/* --- 3. INTERNAL PAGES WRAPPER --- */
+.split.left .cta-btn:hover {
+    background: var(--inst-accent);
+    border-color: var(--inst-accent);
+    color: var(--black);
+    box-shadow: 0 0 30px var(--inst-accent);
+    transform: translateY(-3px);
+}
+
+.split.right .cta-btn:hover {
+    background: var(--school-accent);
+    border-color: var(--school-accent);
+    color: var(--black);
+    box-shadow: 0 0 30px var(--school-accent);
+    transform: translateY(-3px);
+}
+
+/* --- 12. MAIN CONTENT & BACK BUTTON --- */
 .main-content {
     position: relative;
     width: 100%;
@@ -225,18 +792,17 @@ html {
     pointer-events: all;
 }
 
-/* Back Button */
 .back-btn {
-    position: fixed; 
-    top: 25px; 
-    left: 50%; 
+    position: fixed;
+    top: 25px;
+    left: 50%;
     transform: translateX(-50%);
-    z-index: 999; 
-    background: white; 
-    color: black; 
+    z-index: 999;
+    background: var(--white);
+    color: var(--black);
     padding: 12px 35px;
-    border-radius: 50px; 
-    font-weight: bold; 
+    border-radius: var(--radius-full);
+    font-weight: bold;
     cursor: pointer;
     box-shadow: var(--shadow-lg);
     display: none;
@@ -247,77 +813,174 @@ html {
 
 .back-btn:hover {
     transform: translateX(-50%) translateY(-2px);
-    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+    box-shadow: var(--shadow-xl);
 }
 
-.back-btn.show { 
-    display: block; 
+.back-btn.show {
+    display: block;
     animation: slideDown 0.5s ease;
 }
 
 @keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateX(-50%) translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-    }
+    from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 
-/* --- 4. INSTITUTE PAGE DESIGN (JEE/NEET) --- */
-#institute-page { 
-    background-color: var(--inst-bg); 
-    color: var(--inst-text); 
-    min-height: 100vh; 
-    display: none; 
+/* --- 13. BREADCRUMB --- */
+.breadcrumb {
+    padding: 15px 50px;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
 }
 
-.inst-nav { 
-    padding: 25px 50px; 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    border-bottom: 1px solid rgba(0,212,255,0.15);
-    backdrop-filter: blur(10px);
+.breadcrumb a {
+    color: var(--inst-accent);
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb i {
+    font-size: 0.7rem;
+    opacity: 0.5;
+}
+
+.breadcrumb span {
+    color: var(--inst-text);
+}
+
+.school-breadcrumb {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.school-breadcrumb a {
+    color: var(--school-accent);
+}
+
+.school-breadcrumb span {
+    color: var(--school-text);
+}
+
+.school-breadcrumb i {
+    color: var(--school-text);
+}
+
+/* --- 14. NAVIGATION --- */
+.inst-nav, .school-nav {
+    padding: 20px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     position: sticky;
     top: 0;
     z-index: 50;
-    background: rgba(10, 25, 47, 0.95);
+    backdrop-filter: blur(15px);
 }
 
-.inst-logo { 
-    font-size: 1.6rem; 
-    font-weight: bold; 
-    color: var(--inst-accent); 
+.inst-nav {
+    background: rgba(10, 25, 47, 0.95);
+    border-bottom: 1px solid rgba(0, 212, 255, 0.15);
+}
+
+.school-nav {
+    background: rgba(15, 46, 34, 0.95);
+    border-bottom: 1px solid rgba(80, 200, 120, 0.15);
+}
+
+.inst-logo {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--inst-accent);
     letter-spacing: 2px;
     text-shadow: 0 0 10px var(--inst-accent);
 }
 
-.inst-nav > div:last-child span {
-    cursor: pointer;
-    transition: color 0.3s ease;
+.school-logo {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--school-accent);
+    font-family: 'Georgia', serif;
+    text-shadow: 0 0 10px var(--school-accent);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.nav-link {
+    color: var(--inst-secondary);
+    text-decoration: none;
     padding: 8px 15px;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
+    transition: all 0.3s;
 }
 
-.inst-nav > div:last-child span:hover {
+.nav-link:hover {
     color: var(--inst-accent);
-    background: rgba(0,212,255,0.1);
+    background: rgba(0, 212, 255, 0.1);
 }
 
-.hero-section { 
-    padding: 100px 50px; 
-    display: flex; 
-    align-items: center; 
+.school-nav .nav-link {
+    color: #a3b3ac;
+}
+
+.school-nav .nav-link:hover {
+    color: var(--school-accent);
+    background: rgba(80, 200, 120, 0.1);
+}
+
+.nav-cta {
+    background: var(--inst-accent);
+    color: var(--black);
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--radius-full);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px var(--inst-accent);
+}
+
+.school-cta {
+    background: var(--school-accent);
+}
+
+.school-cta:hover {
+    box-shadow: 0 0 20px var(--school-accent);
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* --- 15. INSTITUTE PAGE STYLES --- */
+#institute-page {
+    background-color: var(--inst-bg);
+    color: var(--inst-text);
+    min-height: 100vh;
+}
+
+.hero-section {
+    padding: 80px 50px;
+    display: flex;
+    align-items: center;
     gap: 60px;
-    animation: fadeIn 1s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
 }
 
 .hero-text h4 {
@@ -328,266 +991,1228 @@ html {
     font-weight: 600;
 }
 
-.hero-text h2 { 
-    font-size: 4.5rem; 
-    line-height: 1.1; 
-    margin-bottom: 25px; 
-    background: linear-gradient(135deg, #fff, var(--inst-accent)); 
-    -webkit-background-clip: text; 
+.hero-text h2 {
+    font-size: 4rem;
+    line-height: 1.1;
+    margin-bottom: 25px;
+    background: linear-gradient(135deg, var(--white), var(--inst-accent));
+    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: slideInLeft 0.8s ease;
 }
 
-@keyframes slideInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+.hero-cta-group {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
 }
 
-.stats-grid { 
-    display: grid; 
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 25px; 
-    margin-top: 50px; 
+.primary-btn, .secondary-btn {
+    padding: 14px 28px;
+    border-radius: var(--radius-md);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: none;
 }
 
-.stat-card { 
-    background: rgba(255,255,255,0.05); 
-    padding: 25px; 
+.primary-btn {
+    background: var(--inst-accent);
+    color: var(--black);
+}
+
+.primary-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 25px var(--inst-accent);
+}
+
+.secondary-btn {
+    background: transparent;
+    color: var(--inst-accent);
+    border: 2px solid var(--inst-accent);
+}
+
+.secondary-btn:hover {
+    background: rgba(0, 212, 255, 0.1);
+}
+
+.school-primary {
+    background: var(--school-gold);
+    color: var(--black);
+}
+
+.school-primary:hover {
+    box-shadow: 0 0 25px var(--school-gold);
+}
+
+.school-secondary {
+    color: var(--school-accent);
+    border-color: var(--school-accent);
+}
+
+.school-secondary:hover {
+    background: rgba(80, 200, 120, 0.1);
+}
+
+.hero-visual {
+    flex: 1;
+    height: 400px;
+    background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-visual i {
+    color: var(--inst-accent);
+    opacity: 0.2;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-top: 40px;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 25px;
     border-left: 4px solid var(--inst-accent);
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
 }
 
 .stat-card:hover {
-    background: rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.08);
     transform: translateX(10px);
-    box-shadow: var(--shadow-md);
 }
 
-.stat-num { 
-    font-size: 2.8rem; 
-    font-weight: bold; 
-    color: white;
+.stat-num {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--white);
     margin-bottom: 5px;
 }
 
-.courses-section { 
-    padding: 80px 50px;
-    background: rgba(0,0,0,0.2);
+/* --- 16. SECTION HEADERS --- */
+.section-header {
+    text-align: center;
+    margin-bottom: 50px;
 }
 
-.courses-section h3 {
+.section-tag {
+    display: inline-block;
+    color: var(--inst-accent);
+    font-weight: bold;
+    letter-spacing: 3px;
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+}
+
+.school-tag {
+    color: var(--school-accent);
+}
+
+.section-header h2 {
     font-size: 2.5rem;
-    margin-bottom: 30px;
-    color: white;
+    color: var(--white);
+    margin-bottom: 15px;
 }
 
-.course-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-    gap: 35px; 
-    margin-top: 40px; 
+.school-header h2 {
+    font-family: 'Georgia', serif;
+    color: var(--school-gold);
 }
 
-.course-card { 
-    background: linear-gradient(135deg, #112240, #0a192f); 
-    padding: 35px; 
-    border-radius: 12px; 
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-    border: 1px solid rgba(0,212,255,0.2); 
-    position: relative; 
+.section-header p {
+    color: var(--inst-secondary);
+    font-size: 1.1rem;
+}
+
+.school-header p {
+    color: #a3b3ac;
+}
+
+/* --- 17. RESULTS GALLERY --- */
+.results-section {
+    padding: 80px 50px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.results-filter {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.filter-btn {
+    padding: 10px 25px;
+    background: transparent;
+    border: 2px solid var(--inst-secondary);
+    color: var(--inst-secondary);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.filter-btn:hover, .filter-btn.active {
+    background: var(--inst-accent);
+    border-color: var(--inst-accent);
+    color: var(--black);
+}
+
+.toppers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.topper-card {
+    background: linear-gradient(135deg, #112240, var(--inst-bg));
+    padding: 30px;
+    border-radius: var(--radius-lg);
+    text-align: center;
+    position: relative;
+    transition: all 0.4s;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.topper-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--inst-accent);
+    box-shadow: 0 15px 40px rgba(0, 212, 255, 0.2);
+}
+
+.topper-rank {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--inst-accent);
+    color: var(--black);
+    padding: 8px 20px;
+    border-radius: var(--radius-full);
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.topper-img {
+    width: 100px;
+    height: 100px;
+    background: rgba(0, 212, 255, 0.1);
+    border-radius: 50%;
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.topper-img i {
+    font-size: 3rem;
+    color: var(--inst-accent);
+}
+
+.topper-card h4 {
+    color: var(--white);
+    margin-bottom: 5px;
+}
+
+.topper-card p {
+    color: var(--inst-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.topper-score {
+    display: inline-block;
+    background: rgba(0, 212, 255, 0.1);
+    color: var(--inst-accent);
+    padding: 5px 15px;
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+}
+
+/* --- 18. FACULTY SECTION --- */
+.faculty-section {
+    padding: 80px 50px;
+}
+
+.faculty-carousel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.carousel-btn {
+    width: 50px;
+    height: 50px;
+    background: rgba(0, 212, 255, 0.1);
+    border: 2px solid var(--inst-accent);
+    color: var(--inst-accent);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s;
+    flex-shrink: 0;
+}
+
+.carousel-btn:hover {
+    background: var(--inst-accent);
+    color: var(--black);
+}
+
+.faculty-track {
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 20px 0;
+    scrollbar-width: none;
+}
+
+.faculty-track::-webkit-scrollbar {
+    display: none;
+}
+
+.faculty-card {
+    min-width: 280px;
+    background: linear-gradient(135deg, #112240, var(--inst-bg));
+    padding: 30px;
+    border-radius: var(--radius-lg);
+    text-align: center;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    transition: all 0.3s;
+}
+
+.faculty-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--inst-accent);
+}
+
+.faculty-img {
+    width: 80px;
+    height: 80px;
+    background: rgba(0, 212, 255, 0.1);
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.faculty-img i {
+    font-size: 2.5rem;
+    color: var(--inst-accent);
+}
+
+.faculty-card h4 {
+    color: var(--white);
+    margin-bottom: 5px;
+}
+
+.faculty-subject {
+    display: inline-block;
+    background: var(--inst-accent);
+    color: var(--black);
+    padding: 3px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.faculty-card p {
+    color: var(--inst-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+.faculty-stats {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    color: var(--inst-secondary);
+    font-size: 0.85rem;
+}
+
+.faculty-stats i {
+    color: var(--school-gold);
+    margin-right: 5px;
+}
+
+/* --- 19. COURSES SECTION --- */
+.courses-section {
+    padding: 80px 50px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 35px;
+}
+
+.course-card {
+    background: linear-gradient(135deg, #112240, var(--inst-bg));
+    padding: 35px;
+    border-radius: var(--radius-lg);
+    transition: all 0.4s;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    position: relative;
     overflow: hidden;
 }
 
-.course-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, transparent, rgba(0,212,255,0.1));
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
-
-.course-card:hover::before {
-    opacity: 1;
-}
-
-.course-card:hover { 
-    transform: translateY(-12px); 
+.course-card:hover {
+    transform: translateY(-12px);
     border-color: var(--inst-accent);
-    box-shadow: 0 15px 40px rgba(0,212,255,0.3);
+    box-shadow: 0 15px 40px rgba(0, 212, 255, 0.3);
 }
 
-.badge { 
-    position: absolute; 
-    top: 15px; 
-    right: 15px; 
-    background: var(--inst-accent); 
-    color: black; 
-    padding: 6px 14px; 
-    font-size: 0.75rem; 
+.badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--inst-accent);
+    color: var(--black);
+    padding: 6px 14px;
+    font-size: 0.75rem;
     font-weight: bold;
-    border-radius: 20px;
+    border-radius: var(--radius-full);
     letter-spacing: 1px;
-    box-shadow: 0 4px 12px rgba(0,212,255,0.4);
+}
+
+.course-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(0, 212, 255, 0.1);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.course-icon i {
+    font-size: 1.8rem;
+    color: var(--inst-accent);
 }
 
 .course-card h3 {
-    position: relative;
-    z-index: 1;
+    color: var(--white);
+    margin-bottom: 10px;
+    font-size: 1.4rem;
 }
 
-.course-card a {
-    position: relative;
-    z-index: 1;
-    display: inline-block;
-    transition: transform 0.3s ease;
+.course-card > p {
+    color: var(--inst-secondary);
+    margin-bottom: 20px;
 }
 
-.course-card a:hover {
+.course-features {
+    list-style: none;
+    margin-bottom: 25px;
+}
+
+.course-features li {
+    color: var(--inst-text);
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.course-features i {
+    color: var(--school-accent);
+}
+
+.course-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.course-duration {
+    color: var(--inst-secondary);
+    font-size: 0.9rem;
+}
+
+.course-link {
+    color: var(--inst-accent);
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.course-link:hover {
     transform: translateX(5px);
 }
 
-/* --- 5. SCHOOL PAGE DESIGN (International) --- */
-#school-page { 
-    background-color: var(--school-bg); 
-    color: #f0fdf4; 
-    min-height: 100vh; 
-    display: none; 
+/* --- 20. FEE STRUCTURE --- */
+.fees-section {
+    padding: 80px 50px;
 }
 
-.school-nav { 
-    padding: 25px 50px; 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    background: rgba(0,0,0,0.3); 
-    backdrop-filter: blur(15px);
-    position: sticky;
+.fees-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.fee-card {
+    background: linear-gradient(135deg, #112240, var(--inst-bg));
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    transition: all 0.3s;
+    position: relative;
+}
+
+.fee-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--inst-accent);
+}
+
+.fee-card.featured {
+    border-color: var(--inst-accent);
+    transform: scale(1.02);
+}
+
+.featured-badge {
+    position: absolute;
     top: 0;
-    z-index: 50;
-}
-
-.school-logo { 
-    font-size: 1.6rem; 
-    font-weight: bold; 
-    color: var(--school-accent); 
-    font-family: 'Georgia', serif;
-    text-shadow: 0 0 10px var(--school-accent);
-}
-
-.school-nav > div:last-child span {
-    cursor: pointer;
-    transition: all 0.3s ease;
-    padding: 8px 15px;
-    border-radius: 4px;
-}
-
-.school-nav > div:last-child span:hover {
-    color: var(--school-accent);
-    background: rgba(80,200,120,0.1);
-}
-
-.school-hero { 
-    height: 85vh; 
-    background: url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1500') center/cover; 
-    position: relative; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
+    left: 0;
+    right: 0;
+    background: var(--inst-accent);
+    color: var(--black);
     text-align: center;
+    padding: 8px;
+    font-weight: bold;
+    font-size: 0.8rem;
 }
 
-.school-hero::after { 
-    content:''; 
-    position: absolute; 
-    inset: 0; 
-    background: linear-gradient(135deg, rgba(15, 46, 34, 0.8), rgba(15, 46, 34, 0.6));
+.fee-header {
+    padding: 30px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.hero-content { 
-    position: relative; 
-    z-index: 2; 
-    max-width: 900px;
-    padding: 20px;
-    animation: fadeInUp 1s ease;
+.fee-card.featured .fee-header {
+    padding-top: 50px;
 }
 
-.hero-content h2 { 
-    font-size: 4rem; 
-    font-family: 'Georgia', serif; 
-    margin-bottom: 25px; 
-    color: var(--school-gold);
-    text-shadow: 2px 2px 12px rgba(0,0,0,0.5);
-    line-height: 1.2;
+.fee-header h3 {
+    color: var(--white);
+    margin-bottom: 15px;
 }
 
-.hero-content button {
-    background: var(--school-gold);
+.fee-price {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--inst-accent);
+}
+
+.fee-price span {
+    font-size: 1rem;
+    color: var(--inst-secondary);
+}
+
+.fee-body {
+    padding: 30px;
+}
+
+.fee-body ul {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+.fee-body li {
+    padding: 10px 0;
+    color: var(--inst-text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.fee-body li i {
+    color: var(--school-accent);
+}
+
+.fee-scholarship {
+    background: rgba(80, 200, 120, 0.1);
+    padding: 12px 15px;
+    border-radius: var(--radius-md);
+    color: var(--school-accent);
+    font-size: 0.9rem;
+}
+
+.fee-scholarship i {
+    margin-right: 8px;
+}
+
+.fee-details {
+    padding: 0 30px;
+    margin-bottom: 20px;
+}
+
+.fee-details summary {
+    cursor: pointer;
+    color: var(--inst-accent);
+    font-weight: 600;
+    padding: 10px 0;
+}
+
+.payment-options {
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius-md);
+    margin-top: 10px;
+}
+
+.payment-options p {
+    color: var(--inst-text);
+    padding: 5px 0;
+    font-size: 0.9rem;
+}
+
+.fee-cta {
+    display: block;
+    width: calc(100% - 60px);
+    margin: 0 30px 30px;
+    padding: 14px;
+    background: var(--inst-accent);
+    color: var(--black);
     border: none;
-    padding: 16px 45px;
+    border-radius: var(--radius-md);
     font-weight: bold;
     cursor: pointer;
-    font-size: 1rem;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    box-shadow: var(--shadow-md);
+    transition: all 0.3s;
 }
 
-.hero-content button:hover {
-    background: #ffed4e;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(255,215,0,0.4);
+.fee-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px var(--inst-accent);
 }
 
-.values-section { 
-    padding: 100px 50px; 
-    background: linear-gradient(135deg, #0b2219, #0f2e22);
+/* --- 21. FEE CALCULATOR --- */
+.fee-calculator {
+    background: linear-gradient(135deg, #112240, var(--inst-bg));
+    padding: 40px;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-.values-section > div:first-child {
-    animation: fadeIn 1s ease;
-}
-
-.value-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-    gap: 50px; 
+.fee-calculator h3 {
+    color: var(--white);
+    margin-bottom: 30px;
     text-align: center;
+}
+
+.fee-calculator h3 i {
+    color: var(--inst-accent);
+    margin-right: 10px;
+}
+
+.calculator-form {
+    display: grid;
+    gap: 25px;
+}
+
+.calc-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.calc-group label {
+    color: var(--inst-text);
+    font-weight: 600;
+}
+
+.calc-group select,
+.calc-group input[type="range"] {
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: var(--radius-md);
+    color: var(--white);
+}
+
+.calc-group input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 8px;
+    background: rgba(0, 212, 255, 0.2);
+    border-radius: 4px;
+    padding: 0;
+}
+
+.calc-group input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--inst-accent);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.calc-group span {
+    color: var(--inst-accent);
+    font-weight: bold;
+}
+
+.calc-result {
+    background: rgba(0, 212, 255, 0.1);
+    padding: 20px;
+    border-radius: var(--radius-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.calc-result span {
+    color: var(--inst-text);
+}
+
+.calc-result strong {
+    font-size: 1.8rem;
+    color: var(--inst-accent);
+}
+
+/* --- 22. BATCH SCHEDULE --- */
+.batch-section {
+    padding: 80px 50px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.batch-table-wrapper {
+    overflow-x: auto;
+}
+
+.batch-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: linear-gradient(135deg, #112240, var(--inst-bg));
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.batch-table th,
+.batch-table td {
+    padding: 20px;
+    text-align: left;
+}
+
+.batch-table th {
+    background: rgba(0, 212, 255, 0.1);
+    color: var(--inst-accent);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+}
+
+.batch-table td {
+    color: var(--inst-text);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.batch-table tr:hover td {
+    background: rgba(0, 212, 255, 0.05);
+}
+
+.countdown {
+    display: inline-block;
+    background: rgba(0, 212, 255, 0.1);
+    color: var(--inst-accent);
+    padding: 3px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    margin-left: 10px;
+}
+
+.seats-badge {
+    display: inline-block;
+    background: rgba(80, 200, 120, 0.2);
+    color: var(--school-accent);
+    padding: 5px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.seats-badge.urgent {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    animation: pulse 1s infinite;
+}
+
+.batch-enroll {
+    background: var(--inst-accent);
+    color: var(--black);
+    padding: 8px 20px;
+    border: none;
+    border-radius: var(--radius-full);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.batch-enroll:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px var(--inst-accent);
+}
+
+/* --- 23. TESTIMONIALS --- */
+.testimonials-section {
+    padding: 80px 50px;
+}
+
+.testimonials-carousel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.testimonial-card {
+    background: linear-gradient(135deg, #112240, var(--inst-bg));
+    padding: 35px;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    transition: all 0.3s;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--inst-accent);
+}
+
+.testimonial-rating {
+    margin-bottom: 20px;
+}
+
+.testimonial-rating i {
+    color: var(--school-gold);
+    margin-right: 3px;
+}
+
+.testimonial-card p {
+    color: var(--inst-text);
+    font-style: italic;
+    line-height: 1.8;
+    margin-bottom: 25px;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.author-avatar {
+    width: 50px;
+    height: 50px;
+    background: rgba(0, 212, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.author-avatar i {
+    color: var(--inst-accent);
+    font-size: 1.2rem;
+}
+
+.testimonial-author strong {
+    display: block;
+    color: var(--white);
+}
+
+.testimonial-author span {
+    color: var(--inst-secondary);
+    font-size: 0.85rem;
+}
+
+/* --- 24. FAQ SECTION --- */
+.faq-section {
+    padding: 80px 50px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    margin-bottom: 15px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: linear-gradient(135deg, #112240, var(--inst-bg));
+    border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.faq-question {
+    width: 100%;
+    padding: 20px 25px;
+    background: transparent;
+    border: none;
+    color: var(--white);
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+.faq-question:hover {
+    background: rgba(0, 212, 255, 0.05);
+}
+
+.faq-question i {
+    color: var(--inst-accent);
+    transition: transform 0.3s;
+}
+
+.faq-question[aria-expanded="true"] i {
+    transform: rotate(45deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.faq-answer.open {
+    max-height: 500px;
+    padding: 0 25px 20px;
+}
+
+.faq-answer p {
+    color: var(--inst-secondary);
+    line-height: 1.8;
+}
+
+.school-faq {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.school-faq .faq-item {
+    background: linear-gradient(135deg, #0b2219, var(--school-bg));
+    border-color: rgba(80, 200, 120, 0.2);
+}
+
+.school-faq-btn:hover {
+    background: rgba(80, 200, 120, 0.05);
+}
+
+.school-faq-btn i {
+    color: var(--school-accent);
+}
+
+/* --- 25. NEWSLETTER --- */
+.newsletter-section {
+    padding: 60px 50px;
+    text-align: center;
+}
+
+.inst-newsletter {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 212, 255, 0.05));
+}
+
+.school-newsletter {
+    background: linear-gradient(135deg, rgba(80, 200, 120, 0.1), rgba(80, 200, 120, 0.05));
+}
+
+.newsletter-content h3 {
+    color: var(--white);
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.newsletter-content h3 i {
+    margin-right: 10px;
+}
+
+.inst-newsletter h3 i {
+    color: var(--inst-accent);
+}
+
+.school-newsletter h3 i {
+    color: var(--school-accent);
+}
+
+.newsletter-content p {
+    color: var(--inst-secondary);
+    margin-bottom: 25px;
+}
+
+.newsletter-form {
+    display: flex;
+    gap: 15px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.newsletter-form input {
+    flex: 1;
+    padding: 14px 20px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-full);
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--white);
+    font-size: 1rem;
+}
+
+.newsletter-form input:focus {
+    outline: none;
+    border-color: var(--inst-accent);
+}
+
+.newsletter-form button {
+    padding: 14px 30px;
+    background: var(--inst-accent);
+    color: var(--black);
+    border: none;
+    border-radius: var(--radius-full);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.school-newsletter .newsletter-form button {
+    background: var(--school-accent);
+}
+
+.newsletter-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* --- 26. FOOTER --- */
+.inst-footer, .school-footer {
+    padding: 60px 50px 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.inst-footer {
+    background: #050d1a;
+}
+
+.school-footer {
+    background: #071812;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-col h4 {
+    color: var(--white);
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+.footer-col p {
+    color: var(--inst-secondary);
+    line-height: 1.8;
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col li {
+    margin-bottom: 10px;
+}
+
+.footer-col a {
+    color: var(--inst-secondary);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-col a:hover {
+    color: var(--inst-accent);
+}
+
+.school-footer .footer-col a:hover {
+    color: var(--school-accent);
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
     margin-top: 20px;
 }
 
+.social-links a {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    transition: all 0.3s;
+}
+
+.social-links a:hover {
+    background: var(--inst-accent);
+    color: var(--black);
+    transform: translateY(-3px);
+}
+
+.school-footer .social-links a:hover {
+    background: var(--school-accent);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-bottom p {
+    color: var(--inst-secondary);
+    font-size: 0.9rem;
+}
+
+/* --- 27. SCHOOL PAGE STYLES --- */
+#school-page {
+    background-color: var(--school-bg, #0f2e22);
+    color: var(--school-text, #f0fdf4);
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+}
+
+.school-hero {
+    height: 85vh;
+    background-color: #0f2e22;
+    background-image: url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1500');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.school-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(15, 46, 34, 0.85), rgba(15, 46, 34, 0.7));
+    z-index: 1;
+}
+
+.school-hero .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    padding: 20px;
+}
+
+.school-hero h2 {
+    font-size: 3.5rem;
+    font-family: 'Georgia', serif;
+    margin-bottom: 25px;
+    color: var(--school-gold);
+    text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+.school-hero p {
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+    opacity: 0.95;
+    color: var(--school-text);
+}
+
+.school-hero .hero-cta-group {
+    justify-content: center;
+}
+
+/* School Stats */
+.school-stats {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    padding: 60px 50px;
+    background: linear-gradient(135deg, #0b2219, var(--school-bg));
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--school-gold);
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    color: var(--school-text);
+    opacity: 0.8;
+}
+
+/* Values Section */
+.values-section {
+    padding: 100px 50px;
+    background: linear-gradient(135deg, #0b2219, var(--school-bg));
+}
+
+.value-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 50px;
+    text-align: center;
+}
+
 .value-card {
-    padding: 30px;
-    background: rgba(255,255,255,0.03);
-    border-radius: 12px;
+    padding: 40px 30px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: var(--radius-lg);
     transition: all 0.4s ease;
     border: 1px solid transparent;
 }
 
 .value-card:hover {
-    background: rgba(255,255,255,0.06);
+    background: rgba(255, 255, 255, 0.06);
     transform: translateY(-10px);
     border-color: var(--school-accent);
-    box-shadow: 0 15px 40px rgba(80,200,120,0.2);
+    box-shadow: 0 15px 40px rgba(80, 200, 120, 0.2);
 }
 
-.value-card i { 
-    color: var(--school-accent); 
-    font-size: 3.5rem; 
+.value-card i {
+    color: var(--school-accent);
+    font-size: 3.5rem;
     margin-bottom: 25px;
     transition: transform 0.3s ease;
 }
@@ -596,82 +2221,2998 @@ html {
     transform: scale(1.1);
 }
 
-.value-card h3 { 
-    color: var(--school-gold); 
-    margin-bottom: 15px; 
-    font-size: 1.6rem;
+.value-card h3 {
+    color: var(--school-gold);
+    margin-bottom: 15px;
+    font-size: 1.5rem;
     font-family: 'Georgia', serif;
 }
 
-/* Loading Animation */
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+.value-card p {
+    color: #a3b3ac;
 }
 
-/* Responsive Design */
+/* --- 28. FACILITIES SECTION --- */
+.facilities-section {
+    padding: 80px 50px;
+}
+
+.facilities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 25px;
+}
+
+.facility-card {
+    background: linear-gradient(135deg, #0b2219, var(--school-bg));
+    padding: 30px;
+    border-radius: var(--radius-lg);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 1px solid rgba(80, 200, 120, 0.2);
+}
+
+.facility-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--school-accent);
+    box-shadow: 0 10px 30px rgba(80, 200, 120, 0.2);
+}
+
+.facility-icon {
+    width: 70px;
+    height: 70px;
+    background: rgba(80, 200, 120, 0.1);
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.facility-icon i {
+    font-size: 1.8rem;
+    color: var(--school-accent);
+}
+
+.facility-card h4 {
+    color: var(--white);
+    margin-bottom: 8px;
+}
+
+.facility-card p {
+    color: #a3b3ac;
+    font-size: 0.9rem;
+}
+
+/* --- 29. VIRTUAL TOUR --- */
+.virtual-tour-section {
+    padding: 80px 50px;
+    background: linear-gradient(135deg, rgba(80, 200, 120, 0.1), transparent);
+    text-align: center;
+}
+
+.tour-content h3 {
+    color: var(--white);
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.tour-content h3 i {
+    color: var(--school-accent);
+    margin-right: 10px;
+}
+
+.tour-content > p {
+    color: #a3b3ac;
+    margin-bottom: 30px;
+}
+
+.tour-preview {
+    max-width: 800px;
+    margin: 0 auto 30px;
+    aspect-ratio: 16/9;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed rgba(80, 200, 120, 0.3);
+}
+
+.tour-placeholder {
+    text-align: center;
+    color: var(--school-accent);
+}
+
+.tour-placeholder i {
+    font-size: 4rem;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.tour-placeholder i:hover {
+    transform: scale(1.1);
+}
+
+.tour-btn {
+    background: var(--school-gold);
+    color: var(--black);
+    padding: 14px 35px;
+    border: none;
+    border-radius: var(--radius-full);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.tour-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 25px var(--school-gold);
+}
+
+/* --- 30. ACADEMICS SECTION --- */
+.academics-section {
+    padding: 80px 50px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.academics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.academic-card {
+    background: linear-gradient(135deg, #0b2219, var(--school-bg));
+    padding: 35px;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(80, 200, 120, 0.2);
+    transition: all 0.3s;
+    position: relative;
+}
+
+.academic-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--school-accent);
+}
+
+.academic-card.featured {
+    border-color: var(--school-gold);
+    transform: scale(1.02);
+}
+
+.academic-badge {
+    display: inline-block;
+    background: var(--school-accent);
+    color: var(--black);
+    padding: 5px 15px;
+    border-radius: var(--radius-full);
+    font-weight: bold;
+    font-size: 0.8rem;
+    margin-bottom: 15px;
+}
+
+.academic-card.featured .academic-badge {
+    background: var(--school-gold);
+}
+
+.academic-card h3 {
+    color: var(--white);
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+}
+
+.academic-card > p {
+    color: #a3b3ac;
+    margin-bottom: 20px;
+}
+
+.academic-card ul {
+    list-style: none;
+}
+
+.academic-card li {
+    padding: 8px 0;
+    color: var(--school-text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.academic-card li i {
+    color: var(--school-accent);
+}
+
+/* --- 31. ADMISSION TIMELINE --- */
+.admissions-section {
+    padding: 80px 50px;
+}
+
+.admission-timeline {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.admission-timeline::before {
+    content: '';
+    position: absolute;
+    left: 30px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--school-accent), var(--school-gold));
+}
+
+.timeline-item {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.timeline-number {
+    width: 60px;
+    height: 60px;
+    background: var(--school-accent);
+    color: var(--black);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    flex-shrink: 0;
+    z-index: 1;
+}
+
+.timeline-content {
+    background: linear-gradient(135deg, #0b2219, var(--school-bg));
+    padding: 25px;
+    border-radius: var(--radius-lg);
+    flex: 1;
+    border: 1px solid rgba(80, 200, 120, 0.2);
+}
+
+.timeline-content h4 {
+    color: var(--school-gold);
+    margin-bottom: 8px;
+}
+
+.timeline-content p {
+    color: #a3b3ac;
+}
+
+.admission-cta {
+    text-align: center;
+    margin-top: 40px;
+}
+
+/* --- 32. EVENTS CALENDAR --- */
+.events-section {
+    padding: 80px 50px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.events-timeline {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.event-card {
+    background: linear-gradient(135deg, #0b2219, var(--school-bg));
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex;
+    border: 1px solid rgba(80, 200, 120, 0.2);
+    transition: all 0.3s;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--school-accent);
+}
+
+.event-date {
+    background: var(--school-accent);
+    color: var(--black);
+    padding: 20px;
+    text-align: center;
+    min-width: 80px;
+}
+
+.event-date .day {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.event-date .month {
+    display: block;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.event-details {
+    padding: 20px;
+    flex: 1;
+}
+
+.event-details h4 {
+    color: var(--white);
+    margin-bottom: 8px;
+}
+
+.event-details p {
+    color: #a3b3ac;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.event-time {
+    color: var(--school-accent);
+    font-size: 0.85rem;
+}
+
+.event-time i {
+    margin-right: 5px;
+}
+
+/* --- 33. PARENT TESTIMONIALS --- */
+.parent-testimonials {
+    padding: 80px 50px;
+}
+
+.testimonials-slider {
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.parent-testimonial {
+    display: none;
+    text-align: center;
+    animation: fadeIn 0.5s ease;
+}
+
+.parent-testimonial.active {
+    display: block;
+}
+
+.testimonial-stars {
+    margin-bottom: 25px;
+}
+
+.testimonial-stars i {
+    color: var(--school-gold);
+    font-size: 1.3rem;
+    margin: 0 3px;
+}
+
+.parent-testimonial blockquote {
+    font-size: 1.3rem;
+    color: var(--school-text);
+    font-style: italic;
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+.parent-info strong {
+    display: block;
+    color: var(--school-gold);
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.parent-info span {
+    color: #a3b3ac;
+}
+
+.testimonial-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background: rgba(80, 200, 120, 0.3);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.dot.active, .dot:hover {
+    background: var(--school-accent);
+    transform: scale(1.2);
+}
+
+/* --- 34. LOCATION SECTION --- */
+.location-section {
+    padding: 80px 50px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.location-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+    align-items: start;
+}
+
+.map-container {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 2px solid rgba(80, 200, 120, 0.3);
+}
+
+.map-container iframe {
+    display: block;
+}
+
+.location-info {
+    background: linear-gradient(135deg, #0b2219, var(--school-bg));
+    padding: 30px;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(80, 200, 120, 0.2);
+}
+
+.location-info h4 {
+    color: var(--school-gold);
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+.location-info h4:first-child {
+    margin-top: 0;
+}
+
+.location-info h4 i {
+    color: var(--school-accent);
+    margin-right: 10px;
+}
+
+.location-info p {
+    color: #a3b3ac;
+    line-height: 1.8;
+}
+
+.directions-btn {
+    width: 100%;
+    margin-top: 25px;
+    padding: 14px;
+    background: var(--school-accent);
+    color: var(--black);
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.directions-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px var(--school-accent);
+}
+
+/* --- 35. LIGHTBOX MODAL --- */
+.lightbox-content {
+    position: relative;
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    max-width: 600px;
+    width: 100%;
+    padding: 30px;
+    text-align: center;
+    animation: modalIn 0.3s ease;
+}
+
+.lightbox-content h3 {
+    color: var(--gray-800);
+    margin-bottom: 20px;
+}
+
+.lightbox-image {
+    background: var(--gray-100);
+    padding: 60px;
+    border-radius: var(--radius-md);
+    margin-bottom: 20px;
+}
+
+.lightbox-image i {
+    color: var(--gray-600);
+}
+
+.lightbox-content p {
+    color: var(--gray-600);
+}
+
+/* --- 36. VIRTUAL TOUR MODAL --- */
+.tour-modal-content {
+    position: relative;
+    background: var(--school-bg);
+    border-radius: var(--radius-lg);
+    max-width: 900px;
+    width: 100%;
+    padding: 30px;
+    animation: modalIn 0.3s ease;
+}
+
+.tour-modal-content .modal-close {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+}
+
+.tour-modal-content .modal-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.tour-modal-content h3 {
+    color: var(--white);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.tour-modal-content h3 i {
+    color: var(--school-accent);
+    margin-right: 10px;
+}
+
+.tour-viewer {
+    aspect-ratio: 16/9;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: var(--radius-md);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tour-placeholder-large {
+    text-align: center;
+    color: var(--school-accent);
+}
+
+.tour-placeholder-large i {
+    font-size: 4rem;
+    margin-bottom: 15px;
+}
+
+.tour-placeholder-large p {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.tour-placeholder-large span {
+    color: #a3b3ac;
+    font-size: 0.9rem;
+}
+
+.tour-navigation {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.tour-nav-btn {
+    padding: 10px 20px;
+    background: rgba(80, 200, 120, 0.1);
+    border: 1px solid rgba(80, 200, 120, 0.3);
+    color: var(--school-text);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.tour-nav-btn:hover, .tour-nav-btn.active {
+    background: var(--school-accent);
+    color: var(--black);
+    border-color: var(--school-accent);
+}
+
+/* --- 37. RIPPLE EFFECT --- */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    transform: scale(0);
+    animation: ripple-animation 0.6s ease-out;
+    pointer-events: none;
+}
+
+@keyframes ripple-animation {
+    to {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+/* --- 38. RESPONSIVE DESIGN --- */
 @media (max-width: 1024px) {
-    .hero-text h2 { font-size: 3.5rem; }
-    .hero-content h2 { font-size: 3rem; }
+    .hero-text h2 { font-size: 3rem; }
+    .school-hero h2 { font-size: 2.8rem; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .school-stats { gap: 40px; flex-wrap: wrap; }
+    .location-content { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 768px) {
+    /* Gateway */
     .gateway-container { flex-direction: column; }
-    .split { 
-        width: 100% !important; 
-        height: 50%;
-    }
-    .split:hover { 
-        width: 100% !important; 
-        height: 55%;
-    }
-    .landing-content h1 { font-size: 2.5rem; }
+    .split { width: 100% !important; height: 50%; }
+    .split:hover { width: 100% !important; height: 55%; }
+    .landing-content h1 { font-size: 2.2rem; }
+    
+    /* Navigation */
+    .nav-links { display: none; }
+    .mobile-menu-btn { display: block; }
+    .inst-nav, .school-nav { padding: 15px 25px; }
+    
+    /* Hero */
     .hero-section { 
         flex-direction: column; 
-        padding: 60px 30px;
+        padding: 60px 25px;
+        text-align: center;
     }
-    .hero-text h2 { font-size: 2.5rem; }
-    .hero-content h2 { font-size: 2.2rem; }
+    .hero-text h2 { font-size: 2.2rem; }
+    .hero-cta-group { justify-content: center; flex-wrap: wrap; }
+    .hero-visual { display: none; }
+    
+    /* School Hero */
+    .school-hero { height: 70vh; }
+    .school-hero h2 { font-size: 2rem; }
+    .school-hero p { font-size: 1rem; }
+    
+    /* Stats */
     .stats-grid { grid-template-columns: 1fr; }
-    .value-grid { grid-template-columns: 1fr; }
-    .inst-nav, .school-nav { 
-        padding: 20px 25px;
+    .school-stats { 
+        flex-direction: column; 
+        gap: 30px;
+        padding: 40px 25px;
+    }
+    
+    /* Sections */
+    .results-section,
+    .faculty-section,
+    .courses-section,
+    .fees-section,
+    .batch-section,
+    .testimonials-section,
+    .faq-section,
+    .newsletter-section,
+    .facilities-section,
+    .virtual-tour-section,
+    .academics-section,
+    .admissions-section,
+    .events-section,
+    .parent-testimonials,
+    .location-section,
+    .values-section {
+        padding: 60px 25px;
+    }
+    
+    /* Grids */
+    .value-grid,
+    .course-grid,
+    .fees-grid,
+    .toppers-grid,
+    .facilities-grid,
+    .academics-grid,
+    .events-timeline,
+    .testimonials-carousel {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Tables */
+    .batch-table th,
+    .batch-table td {
+        padding: 12px 10px;
+        font-size: 0.85rem;
+    }
+    
+    /* Footer */
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .inst-footer, .school-footer { padding: 40px 25px 20px; }
+    
+    /* Chat Widget */
+    .chat-widget { 
+        width: calc(100% - 30px);
+        right: 15px;
+        bottom: 15px;
+    }
+    
+    /* WhatsApp */
+    .whatsapp-float {
+        bottom: 80px;
+        right: 15px;
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+    }
+    
+    /* Sticky CTA */
+    .sticky-cta-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    /* Breadcrumb */
+    .breadcrumb { padding: 12px 25px; }
+    
+    /* Back Button */
+    .back-btn { 
+        padding: 10px 20px;
+        font-size: 0.85rem;
+    }
+    
+    /* Timeline */
+    .admission-timeline::before { left: 20px; }
+    .timeline-number { 
+        width: 40px; 
+        height: 40px;
+        font-size: 1rem;
+    }
+    .timeline-content { padding: 20px; }
+    
+    /* Newsletter */
+    .newsletter-form {
+        flex-direction: column;
+    }
+    
+    /* Cookie Banner */
+    .cookie-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    /* Fee Calculator */
+    .fee-calculator { padding: 25px; }
+    
+    /* Faculty Carousel */
+    .carousel-btn { display: none; }
+    .faculty-track { padding: 10px 0; }
+}
+
+@media (max-width: 480px) {
+    .landing-content h1 { font-size: 1.8rem; }
+    .hero-text h2 { font-size: 1.8rem; }
+    .school-hero h2 { font-size: 1.6rem; }
+    .section-header h2 { font-size: 1.8rem; }
+    .cta-btn { padding: 12px 25px; font-size: 0.9rem; }
+    .primary-btn, .secondary-btn { padding: 12px 20px; font-size: 0.9rem; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .stat-number { font-size: 2.2rem; }
+    .fee-price { font-size: 2rem; }
+    .parent-testimonial blockquote { font-size: 1.1rem; }
+}
+
+/* --- 39. PRINT STYLES --- */
+@media print {
+    .gateway-container,
+    .back-btn,
+    .whatsapp-float,
+    .chat-widget,
+    .sticky-cta,
+    .cookie-banner,
+    .modal,
+    .nav-cta,
+    .mobile-menu-btn,
+    .newsletter-section,
+    .social-links {
+        display: none !important;
+    }
+    
+    body {
+        background: white;
+        color: black;
+    }
+    
+    .main-content {
+        opacity: 1;
+        pointer-events: all;
+    }
+    
+    #institute-page,
+    #school-page {
+        display: block !important;
+        background: white;
+        color: black;
+    }
+    
+    .inst-nav, .school-nav {
+        background: white;
+        border-bottom: 2px solid #333;
+    }
+    
+    .section-header h2,
+    .hero-text h2,
+    .school-hero h2 {
+        color: black;
+        -webkit-text-fill-color: black;
+    }
+    
+    a { color: black; text-decoration: underline; }
+}
+
+/* --- 40. HIGH CONTRAST MODE --- */
+@media (prefers-contrast: high) {
+    :root {
+        --inst-accent: #00ffff;
+        --school-accent: #00ff00;
+        --school-gold: #ffff00;
+    }
+    
+    .course-card,
+    .fee-card,
+    .topper-card,
+    .faculty-card,
+    .testimonial-card,
+    .facility-card,
+    .academic-card,
+    .event-card,
+    .faq-item {
+        border-width: 2px;
+    }
+}
+
+/* ============================================
+   41. NEW SECTIONS - ACCREDITATION, ABOUT, STATS
+   ============================================ */
+
+/* --- Accreditation Bar --- */
+.accreditation-bar {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 212, 255, 0.05));
+    padding: 15px 50px;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.school-accred {
+    background: linear-gradient(135deg, rgba(80, 200, 120, 0.1), rgba(80, 200, 120, 0.05));
+    border-bottom: 1px solid rgba(80, 200, 120, 0.2);
+}
+
+.accreditation-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.accred-label {
+    color: var(--inst-secondary);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.school-accred .accred-label {
+    color: #a3b3ac;
+}
+
+.accred-badges {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.accred-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-full);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s;
+}
+
+.accred-badge:hover {
+    background: rgba(0, 212, 255, 0.1);
+    border-color: var(--inst-accent);
+    transform: translateY(-2px);
+}
+
+.school-accred .accred-badge:hover {
+    background: rgba(80, 200, 120, 0.1);
+    border-color: var(--school-accent);
+}
+
+.accred-badge i {
+    color: var(--inst-accent);
+    font-size: 1.1rem;
+}
+
+.school-accred .accred-badge i {
+    color: var(--school-accent);
+}
+
+.accred-badge span {
+    color: var(--inst-text);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.school-accred .accred-badge span {
+    color: var(--school-text);
+}
+
+/* --- About Section --- */
+.about-section {
+    padding: 80px 50px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.about-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.founder-message {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    background: linear-gradient(135deg, #112240, var(--inst-bg));
+    padding: 40px;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    margin-bottom: 50px;
+}
+
+.founder-img {
+    width: 150px;
+    height: 150px;
+    background: rgba(0, 212, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.founder-img i {
+    font-size: 4rem;
+    color: var(--inst-accent);
+}
+
+.founder-text h3 {
+    color: var(--inst-accent);
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.founder-text blockquote {
+    color: var(--inst-text);
+    font-size: 1.1rem;
+    font-style: italic;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    border-left: 3px solid var(--inst-accent);
+}
+
+.founder-name {
+    color: var(--white);
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.founder-credentials {
+    color: var(--inst-secondary);
+    font-size: 0.9rem;
+}
+
+.why-choose-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.why-card {
+    background: linear-gradient(135deg, #112240, var(--inst-bg));
+    padding: 30px;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.why-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--inst-accent);
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+}
+
+.why-icon {
+    width: 70px;
+    height: 70px;
+    background: rgba(0, 212, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+.why-icon i {
+    font-size: 1.8rem;
+    color: var(--inst-accent);
+}
+
+.why-card h4 {
+    color: var(--white);
+    margin-bottom: 10px;
+}
+
+.why-card p {
+    color: var(--inst-secondary);
+    font-size: 0.95rem;
+}
+
+/* --- Results Statistics Section --- */
+.results-stats-section {
+    padding: 80px 50px;
+}
+
+.stats-charts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.chart-card {
+    background: linear-gradient(135deg, #112240, var(--inst-bg));
+    padding: 30px;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.chart-card h4 {
+    color: var(--white);
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.bar-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.bar-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.bar-label {
+    color: var(--inst-secondary);
+    width: 50px;
+    font-size: 0.9rem;
+}
+
+.bar-track {
+    flex: 1;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--inst-accent), #00a8cc);
+    border-radius: var(--radius-sm);
+    transition: width 1s ease;
+}
+
+.bar-fill.neet {
+    background: linear-gradient(90deg, var(--school-accent), #3da35d);
+}
+
+.bar-value {
+    color: var(--inst-accent);
+    font-weight: bold;
+    width: 50px;
+    text-align: right;
+}
+
+.highlight-card {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(0, 212, 255, 0.05));
+    border-color: var(--inst-accent);
+}
+
+.donut-stat {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.donut-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: conic-gradient(var(--inst-accent) 0deg 270deg, rgba(255,255,255,0.1) 270deg 360deg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.donut-circle::before {
+    content: '';
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    background: var(--inst-bg);
+    border-radius: 50%;
+}
+
+.donut-value {
+    position: relative;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--inst-accent);
+}
+
+.donut-label {
+    position: relative;
+    color: var(--inst-secondary);
+    font-size: 0.85rem;
+}
+
+.highlight-card p {
+    color: var(--inst-secondary);
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+/* --- Awards Section --- */
+.awards-section {
+    padding: 80px 50px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.awards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.award-card {
+    background: linear-gradient(135deg, #112240, var(--inst-bg));
+    padding: 30px;
+    border-radius: var(--radius-lg);
+    text-align: center;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    transition: all 0.3s;
+}
+
+.award-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--school-gold);
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+}
+
+.award-card i {
+    font-size: 2.5rem;
+    color: var(--school-gold);
+    margin-bottom: 15px;
+}
+
+.award-card h4 {
+    color: var(--white);
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+.award-card p {
+    color: var(--inst-secondary);
+    font-size: 0.85rem;
+}
+
+/* --- Infrastructure Section --- */
+.infrastructure-section {
+    padding: 80px 50px;
+}
+
+.infra-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.infra-card {
+    background: linear-gradient(135deg, #112240, var(--inst-bg));
+    padding: 25px;
+    border-radius: var(--radius-lg);
+    text-align: center;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    transition: all 0.3s;
+}
+
+.infra-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--inst-accent);
+}
+
+.infra-card i {
+    font-size: 2rem;
+    color: var(--inst-accent);
+    margin-bottom: 15px;
+}
+
+.infra-card h4 {
+    color: var(--white);
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+.infra-card p {
+    color: var(--inst-secondary);
+    font-size: 0.85rem;
+}
+
+/* --- Exam Calendar Section --- */
+.exam-calendar-section {
+    padding: 80px 50px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.calendar-card {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    background: linear-gradient(135deg, #112240, var(--inst-bg));
+    padding: 25px;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    transition: all 0.3s;
+}
+
+.calendar-card:hover {
+    transform: translateX(5px);
+    border-color: var(--inst-accent);
+}
+
+.cal-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.cal-icon.jee {
+    background: rgba(0, 212, 255, 0.15);
+}
+
+.cal-icon.jee i {
+    color: var(--inst-accent);
+    font-size: 1.5rem;
+}
+
+.cal-icon.neet {
+    background: rgba(80, 200, 120, 0.15);
+}
+
+.cal-icon.neet i {
+    color: var(--school-accent);
+    font-size: 1.5rem;
+}
+
+.cal-icon.elsat {
+    background: rgba(255, 215, 0, 0.15);
+}
+
+.cal-icon.elsat i {
+    color: var(--school-gold);
+    font-size: 1.5rem;
+}
+
+.cal-info h4 {
+    color: var(--white);
+    margin-bottom: 8px;
+}
+
+.cal-date {
+    color: var(--inst-accent);
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.cal-note {
+    color: var(--inst-secondary);
+    font-size: 0.85rem;
+}
+
+/* --- Downloads Section --- */
+.downloads-section {
+    padding: 80px 50px;
+}
+
+.downloads-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.download-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: linear-gradient(135deg, #112240, var(--inst-bg));
+    padding: 20px 25px;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    text-decoration: none;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.download-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--inst-accent);
+    box-shadow: 0 10px 25px rgba(0, 212, 255, 0.2);
+}
+
+.download-card > i:first-child {
+    font-size: 2rem;
+    color: #ef4444;
+}
+
+.download-card div {
+    flex: 1;
+}
+
+.download-card h4 {
+    color: var(--white);
+    margin-bottom: 3px;
+    font-size: 0.95rem;
+}
+
+.download-card span {
+    color: var(--inst-secondary);
+    font-size: 0.8rem;
+}
+
+.download-card > i:last-child {
+    color: var(--inst-accent);
+    font-size: 1.2rem;
+    transition: transform 0.3s;
+}
+
+.download-card:hover > i:last-child {
+    transform: translateY(3px);
+}
+
+/* --- Gallery Section --- */
+.gallery-section {
+    padding: 80px 50px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.gallery-item {
+    position: relative;
+    aspect-ratio: 4/3;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.gallery-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #112240, var(--inst-bg));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-placeholder i {
+    font-size: 3rem;
+    color: rgba(0, 212, 255, 0.3);
+}
+
+.gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    display: flex;
+    align-items: flex-end;
+    padding: 15px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}
+
+.gallery-overlay span {
+    color: var(--white);
+    font-weight: 600;
+}
+
+.gallery-item:hover {
+    transform: scale(1.02);
+    border-color: var(--inst-accent);
+}
+
+
+/* ============================================
+   42. IMPROVED MOBILE EXPERIENCE
+   ============================================ */
+
+@media (max-width: 768px) {
+    /* Gateway - Full screen cards that scroll */
+    .gateway-container {
+        flex-direction: column;
+        overflow-y: auto;
+    }
+    
+    .split {
+        min-height: 100vh;
+        width: 100% !important;
+    }
+    
+    .split:hover {
+        width: 100% !important;
+    }
+    
+    .landing-content h1 {
+        font-size: 2.2rem;
+    }
+    
+    .landing-content p {
+        font-size: 1rem;
+    }
+    
+    /* Navigation improvements */
+    .inst-nav, .school-nav {
+        padding: 15px 20px;
+    }
+    
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        padding: 20px;
+        gap: 15px;
+        z-index: 100;
+    }
+    
+    .inst-nav .nav-links {
+        background: rgba(10, 25, 47, 0.98);
+    }
+    
+    .school-nav .nav-links {
+        background: rgba(15, 46, 34, 0.98);
+    }
+    
+    .nav-links.active {
+        display: flex;
+    }
+    
+    .mobile-menu-btn {
+        display: block;
+    }
+    
+    /* Hero section */
+    .hero-section {
+        flex-direction: column;
+        padding: 40px 20px;
+        text-align: center;
+    }
+    
+    .hero-text h2 {
+        font-size: 2.2rem;
+    }
+    
+    .hero-visual {
+        display: none;
+    }
+    
+    .hero-cta-group {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    /* Accreditation bar */
+    .accreditation-bar {
+        padding: 15px 20px;
+    }
+    
+    .accreditation-content {
         flex-direction: column;
         gap: 15px;
     }
-    .courses-section, .values-section {
-        padding: 60px 30px;
+    
+    .accred-badges {
+        gap: 10px;
     }
-    .back-btn {
-        padding: 10px 25px;
-        font-size: 0.85rem;
+    
+    .accred-badge {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+    
+    /* About section */
+    .about-section {
+        padding: 50px 20px;
+    }
+    
+    .founder-message {
+        flex-direction: column;
+        text-align: center;
+        padding: 25px;
+    }
+    
+    .founder-img {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .founder-img i {
+        font-size: 2.5rem;
+    }
+    
+    .founder-text blockquote {
+        border-left: none;
+        padding-left: 0;
+        border-top: 3px solid var(--inst-accent);
+        padding-top: 15px;
+    }
+    
+    .why-choose-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Stats charts */
+    .results-stats-section {
+        padding: 50px 20px;
+    }
+    
+    .stats-charts {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Awards */
+    .awards-section {
+        padding: 50px 20px;
+    }
+    
+    .awards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* Infrastructure */
+    .infrastructure-section {
+        padding: 50px 20px;
+    }
+    
+    .infra-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* Calendar */
+    .exam-calendar-section {
+        padding: 50px 20px;
+    }
+    
+    .calendar-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Downloads */
+    .downloads-section {
+        padding: 50px 20px;
+    }
+    
+    .downloads-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Gallery */
+    .gallery-section {
+        padding: 50px 20px;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* Results section */
+    .results-section {
+        padding: 50px 20px;
+    }
+    
+    .toppers-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Faculty */
+    .faculty-section {
+        padding: 50px 20px;
+    }
+    
+    .carousel-btn {
+        display: none;
+    }
+    
+    /* Courses */
+    .courses-section {
+        padding: 50px 20px;
+    }
+    
+    .course-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Fees */
+    .fees-section {
+        padding: 50px 20px;
+    }
+    
+    .fees-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .fee-card.featured {
+        transform: none;
+    }
+    
+    /* Chat widget */
+    .chat-widget {
+        width: calc(100% - 40px);
+        right: 20px;
+        bottom: 80px;
+    }
+    
+    /* WhatsApp button */
+    .whatsapp-float {
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+    }
+    
+    /* Sticky CTA */
+    .sticky-cta-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    /* Section headers */
+    .section-header h2 {
+        font-size: 1.8rem;
+    }
+    
+    /* Footer */
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    /* School specific */
+    .school-hero {
+        padding: 60px 20px;
+    }
+    
+    .school-hero h2 {
+        font-size: 2rem;
+    }
+    
+    .school-stats {
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 30px 20px;
+    }
+    
+    .stat-item {
+        flex: 1 1 40%;
+    }
+    
+    .value-grid {
+        grid-template-columns: 1fr;
+        padding: 0 20px;
+    }
+    
+    .facilities-grid {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 0 20px;
+    }
+    
+    .academics-grid {
+        grid-template-columns: 1fr;
+        padding: 0 20px;
+    }
+    
+    .admission-timeline {
+        padding: 0 20px;
+    }
+    
+    .events-timeline {
+        grid-template-columns: 1fr;
+        padding: 0 20px;
+    }
+    
+    .location-content {
+        flex-direction: column;
+    }
+    
+    .map-container {
+        height: 250px;
     }
 }
 
 @media (max-width: 480px) {
-    .landing-content h1 { font-size: 2rem; }
-    .hero-text h2 { font-size: 2rem; }
-    .hero-content h2 { font-size: 1.8rem; }
-    .cta-btn { padding: 12px 30px; }
-    .course-grid { grid-template-columns: 1fr; }
+    .awards-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .infra-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .facilities-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .back-btn {
+        padding: 10px 20px;
+        font-size: 0.85rem;
+    }
 }
 
-/* Accessibility Improvements */
-.cta-btn:focus,
-.back-btn:focus,
-.hero-content button:focus {
-    outline: 3px solid currentColor;
+/* ============================================
+   43. ENHANCED ACCESSIBILITY
+   ============================================ */
+
+/* Better focus indicators */
+:focus-visible {
+    outline: 3px solid var(--inst-accent);
     outline-offset: 3px;
 }
 
-/* Reduced Motion Support */
+.school-page :focus-visible,
+#school-page :focus-visible {
+    outline-color: var(--school-accent);
+}
+
+/* Skip link improvements */
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--white);
+    color: var(--black);
+    padding: 15px 30px;
+    border-radius: var(--radius-md);
+    z-index: 10000;
+    font-weight: bold;
+    transition: top 0.3s;
+    text-decoration: none;
+}
+
+.skip-link:focus {
+    top: 10px;
+}
+
+/* Improved button states */
+button:disabled,
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Screen reader only text */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Better color contrast for text */
+.inst-secondary,
+.faculty-card p,
+.course-card > p,
+.topper-card p {
+    color: #a8b2d1;
+}
+
+/* Ensure interactive elements have visible states */
+.nav-link:focus,
+.cta-btn:focus,
+.primary-btn:focus,
+.secondary-btn:focus,
+.fee-cta:focus,
+.batch-enroll:focus {
+    box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.5);
+}
+
+/* Loading state */
+.loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Animation for bar charts on scroll */
+.bar-fill {
+    width: 0;
+    transition: width 1.5s ease-out;
+}
+
+.bar-fill.animate {
+    width: var(--target-width, 0);
+}
+
+/* Smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
 @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+    html {
+        scroll-behavior: auto;
     }
+    
+    .bar-fill {
+        transition: none;
+    }
+    
+    .gallery-item,
+    .why-card,
+    .award-card,
+    .infra-card,
+    .calendar-card,
+    .download-card {
+        transition: none;
+    }
+}
+
+/* High contrast mode improvements */
+@media (prefers-contrast: high) {
+    .accred-badge,
+    .why-card,
+    .chart-card,
+    .award-card,
+    .infra-card,
+    .calendar-card,
+    .download-card,
+    .gallery-item {
+        border-width: 2px;
+    }
+    
+    .bar-fill {
+        background: var(--inst-accent);
+    }
+    
+    .bar-fill.neet {
+        background: var(--school-accent);
+    }
+}
+
+
+/* ============================================
+   44. SMOOTH UI/UX ENHANCEMENTS
+   ============================================ */
+
+/* --- Global Smooth Transitions --- */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Smooth page transitions */
+.main-content {
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- Enhanced Button Interactions --- */
+.cta-btn,
+.primary-btn,
+.secondary-btn,
+.nav-cta,
+.fee-cta,
+.batch-enroll,
+.cookie-btn,
+.tour-btn,
+.directions-btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Ripple effect base */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(0);
+    animation: rippleEffect 0.6s ease-out;
+    pointer-events: none;
+}
+
+@keyframes rippleEffect {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Button hover lift effect */
+.primary-btn:hover,
+.nav-cta:hover,
+.fee-cta:hover,
+.batch-enroll:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+}
+
+.primary-btn:active,
+.nav-cta:active,
+.fee-cta:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(0, 212, 255, 0.2);
+}
+
+/* --- Smooth Card Hover Effects --- */
+.course-card,
+.fee-card,
+.topper-card,
+.faculty-card,
+.testimonial-card,
+.facility-card,
+.academic-card,
+.event-card,
+.why-card,
+.award-card,
+.infra-card,
+.calendar-card,
+.download-card,
+.gallery-item,
+.chart-card,
+.value-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, box-shadow;
+}
+
+/* Subtle float animation on hover */
+.course-card:hover,
+.fee-card:hover,
+.topper-card:hover,
+.why-card:hover,
+.award-card:hover {
+    transform: translateY(-8px);
+}
+
+/* --- Smooth Gradient Animations --- */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.hero-text h2 {
+    background-size: 200% 200%;
+    animation: gradientShift 8s ease infinite;
+}
+
+/* --- Enhanced Gateway Split Screen --- */
+.split {
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                filter 0.4s ease;
+}
+
+.split::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: inherit;
+    filter: brightness(1);
+    transition: filter 0.4s ease;
+    z-index: -1;
+}
+
+.gateway-container:has(.split.left:hover) .split.right::before,
+.gateway-container:has(.split.right:hover) .split.left::before {
+    filter: brightness(0.7);
+}
+
+.landing-content {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.4s ease;
+}
+
+.split:hover .landing-content {
+    transform: scale(1.05);
+}
+
+/* Pulsing CTA on gateway */
+.split .cta-btn {
+    animation: subtlePulse 2s ease-in-out infinite;
+}
+
+@keyframes subtlePulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
+    50% { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+}
+
+.split:hover .cta-btn {
+    animation: none;
+}
+
+/* --- Smooth Modal Animations --- */
+.modal {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal:not(.hidden) {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content,
+.inquiry-form,
+.lightbox-content,
+.tour-modal-content {
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal:not(.hidden) .modal-content,
+.modal:not(.hidden) .inquiry-form,
+.modal:not(.hidden) .lightbox-content,
+.modal:not(.hidden) .tour-modal-content {
+    transform: scale(1) translateY(0);
+}
+
+.modal-overlay {
+    backdrop-filter: blur(8px);
+    transition: backdrop-filter 0.3s ease;
+}
+
+/* --- Smooth Form Interactions --- */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 212, 255, 0.15);
+}
+
+/* Floating label effect */
+.form-group {
+    position: relative;
+}
+
+.form-group label {
+    transition: all 0.3s ease;
+}
+
+/* --- Enhanced Navigation --- */
+.inst-nav,
+.school-nav {
+    transition: all 0.3s ease;
+}
+
+.nav-link {
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--inst-accent);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::after {
+    width: 80%;
+}
+
+.school-nav .nav-link::after {
+    background: var(--school-accent);
+}
+
+/* --- Smooth Scroll Reveal --- */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered reveal for grids */
+.reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-stagger.active > *:nth-child(1) { transition-delay: 0.1s; }
+.reveal-stagger.active > *:nth-child(2) { transition-delay: 0.2s; }
+.reveal-stagger.active > *:nth-child(3) { transition-delay: 0.3s; }
+.reveal-stagger.active > *:nth-child(4) { transition-delay: 0.4s; }
+.reveal-stagger.active > *:nth-child(5) { transition-delay: 0.5s; }
+.reveal-stagger.active > *:nth-child(6) { transition-delay: 0.6s; }
+
+.reveal-stagger.active > * {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Enhanced Chat Widget --- */
+.chat-widget {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.chat-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                padding 0.3s ease;
+    padding: 0;
+}
+
+.chat-body:not(.hidden) {
+    max-height: 400px;
+    padding: 0;
+}
+
+.chat-message {
+    animation: messageSlide 0.3s ease-out;
+}
+
+@keyframes messageSlide {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Smooth FAQ Accordion --- */
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                padding 0.3s ease;
+    padding: 0 20px;
+}
+
+.faq-answer.open {
+    max-height: 300px;
+    padding: 20px;
+}
+
+.faq-question i {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.faq-question[aria-expanded="true"] i {
+    transform: rotate(45deg);
+}
+
+/* --- Enhanced Toast Notifications --- */
+.toast {
+    animation: toastSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes toastSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+.toast.removing {
+    animation: toastSlideOut 0.3s ease forwards;
+}
+
+@keyframes toastSlideOut {
+    to {
+        opacity: 0;
+        transform: translateX(100%) scale(0.8);
+    }
+}
+
+/* --- Smooth Sticky CTA --- */
+.sticky-cta {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.3s ease;
+    opacity: 0;
+}
+
+.sticky-cta.show {
+    opacity: 1;
+}
+
+/* --- Enhanced Stat Counters --- */
+.stat-num,
+.stat-number {
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover .stat-num,
+.stat-item:hover .stat-number {
+    transform: scale(1.1);
+}
+
+/* --- Smooth Image/Gallery Hover --- */
+.gallery-item {
+    overflow: hidden;
+}
+
+.gallery-placeholder {
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gallery-item:hover .gallery-placeholder {
+    transform: scale(1.1);
+}
+
+.gallery-overlay {
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    transform: translateY(10px);
+}
+
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Smooth Faculty Carousel --- */
+.faculty-track {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.faculty-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.faculty-card:hover {
+    transform: translateY(-10px) scale(1.02);
+}
+
+/* --- Enhanced Topper Cards --- */
+.topper-card {
+    perspective: 1000px;
+}
+
+.topper-card:hover {
+    transform: translateY(-10px);
+}
+
+.topper-rank {
+    transition: all 0.3s ease;
+}
+
+.topper-card:hover .topper-rank {
+    transform: translateX(-50%) scale(1.1);
+    box-shadow: 0 5px 20px rgba(0, 212, 255, 0.4);
+}
+
+/* --- Smooth Back Button --- */
+.back-btn {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.back-btn:hover {
+    transform: translateX(-50%) translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* --- WhatsApp Button Bounce --- */
+.whatsapp-float {
+    animation: whatsappBounce 2s ease-in-out infinite;
+}
+
+@keyframes whatsappBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.whatsapp-float:hover {
+    animation: none;
+    transform: scale(1.15);
+}
+
+/* --- Smooth Progress Steps --- */
+.progress-step {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progress-step.active {
+    transform: scale(1.1);
+}
+
+.progress-step.completed {
+    animation: checkPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes checkPop {
+    0% { transform: scale(0.8); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* --- Smooth Timeline --- */
+.timeline-item {
+    transition: all 0.4s ease;
+}
+
+.timeline-item:hover {
+    transform: translateX(10px);
+}
+
+.timeline-number {
+    transition: all 0.3s ease;
+}
+
+.timeline-item:hover .timeline-number {
+    transform: scale(1.15);
+    box-shadow: 0 5px 20px rgba(80, 200, 120, 0.4);
+}
+
+/* --- Enhanced Event Cards --- */
+.event-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.event-card:hover {
+    transform: translateX(10px);
+    box-shadow: -5px 5px 20px rgba(80, 200, 120, 0.2);
+}
+
+.event-date {
+    transition: all 0.3s ease;
+}
+
+.event-card:hover .event-date {
+    transform: scale(1.05);
+}
+
+/* --- Smooth Testimonial Slider --- */
+.parent-testimonial {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: absolute;
+    width: 100%;
+}
+
+.parent-testimonial.active {
+    opacity: 1;
+    transform: translateX(0);
+    position: relative;
+}
+
+.testimonial-dots .dot {
+    transition: all 0.3s ease;
+}
+
+.testimonial-dots .dot:hover {
+    transform: scale(1.3);
+}
+
+.testimonial-dots .dot.active {
+    transform: scale(1.2);
+}
+
+/* --- Smooth Filter Buttons --- */
+.filter-btn {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.filter-btn:hover {
+    transform: translateY(-2px);
+}
+
+.filter-btn.active {
+    transform: scale(1.05);
+}
+
+/* --- Loading Skeleton Animation --- */
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.skeleton {
+    background: linear-gradient(90deg, 
+        rgba(255,255,255,0.05) 25%, 
+        rgba(255,255,255,0.1) 50%, 
+        rgba(255,255,255,0.05) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+/* --- Smooth Scroll Indicator --- */
+.scroll-progress {
+    transition: transform 0.1s linear;
+}
+
+/* --- Enhanced Cookie Banner --- */
+.cookie-banner {
+    animation: cookieSlide 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes cookieSlide {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* --- Cursor Effects --- */
+.split,
+.gallery-item,
+.facility-card,
+.download-card {
+    cursor: pointer;
+}
+
+/* --- Smooth Section Transitions --- */
+section {
+    transition: opacity 0.6s ease;
+}
+
+/* --- Enhanced Breadcrumb --- */
+.breadcrumb a {
+    transition: all 0.3s ease;
+}
+
+.breadcrumb a:hover {
+    transform: translateX(3px);
+}
+
+/* --- Glow Effects --- */
+.primary-btn:hover,
+.nav-cta:hover {
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.5),
+                0 10px 30px rgba(0, 212, 255, 0.3);
+}
+
+.school-primary:hover,
+.school-cta:hover {
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.5),
+                0 10px 30px rgba(255, 215, 0, 0.3);
+}
+
+/* --- Smooth Icon Animations --- */
+.landing-content > i,
+.hero-visual > i {
+    transition: all 0.4s ease;
+}
+
+.split:hover .landing-content > i {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* --- Enhanced Accreditation Badges --- */
+.accred-badge {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.accred-badge:hover {
+    transform: translateY(-3px) scale(1.05);
+}
+
+.accred-badge i {
+    transition: transform 0.3s ease;
+}
+
+.accred-badge:hover i {
+    transform: rotate(10deg) scale(1.1);
+}
+
+/* --- Smooth Details/Summary --- */
+details {
+    transition: all 0.3s ease;
+}
+
+details summary {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+details summary:hover {
+    color: var(--inst-accent);
+}
+
+details[open] summary {
+    margin-bottom: 10px;
+}
+
+/* --- Page Load Animation --- */
+@keyframes pageLoad {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+body {
+    animation: pageLoad 0.6s ease-out;
+}
+
+/* --- Hover Glow for Cards --- */
+.course-card::before,
+.fee-card::before,
+.why-card::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(45deg, var(--inst-accent), transparent, var(--inst-accent));
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: -1;
+}
+
+.course-card:hover::before,
+.fee-card:hover::before,
+.why-card:hover::before {
+    opacity: 0.3;
+}
+
+/* --- Smooth Number Counting --- */
+.counting {
+    transition: all 0.1s ease;
+}
+
+
+/* ============================================
+   45. FINAL POLISH & MICRO-INTERACTIONS
+   ============================================ */
+
+/* --- Testimonial Cards Enhancement --- */
+.testimonials-carousel {
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 20px 0;
+}
+
+.testimonial-card {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px) scale(1.02);
+}
+
+.testimonial-rating i {
+    transition: all 0.2s ease;
+}
+
+.testimonial-card:hover .testimonial-rating i {
+    animation: starPop 0.3s ease forwards;
+}
+
+.testimonial-card:hover .testimonial-rating i:nth-child(1) { animation-delay: 0s; }
+.testimonial-card:hover .testimonial-rating i:nth-child(2) { animation-delay: 0.05s; }
+.testimonial-card:hover .testimonial-rating i:nth-child(3) { animation-delay: 0.1s; }
+.testimonial-card:hover .testimonial-rating i:nth-child(4) { animation-delay: 0.15s; }
+.testimonial-card:hover .testimonial-rating i:nth-child(5) { animation-delay: 0.2s; }
+
+@keyframes starPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
+/* --- Smooth Input Focus --- */
+.newsletter-form input,
+.chat-input input {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.newsletter-form input:focus,
+.chat-input input:focus {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+}
+
+/* --- Enhanced Social Links --- */
+.social-links a {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.social-links a:hover {
+    transform: translateY(-5px) scale(1.1);
+}
+
+/* --- Smooth Checkbox Animation --- */
+.checkbox-group input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--gray-200);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.checkbox-group input[type="checkbox"]:checked {
+    background: var(--inst-accent);
+    border-color: var(--inst-accent);
+}
+
+.checkbox-group input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--black);
+    font-size: 14px;
+    font-weight: bold;
+    animation: checkPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* --- Smooth Range Slider --- */
+input[type="range"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: var(--gray-200);
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--inst-accent);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 212, 255, 0.3);
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.5);
+}
+
+input[type="range"]:active::-webkit-slider-thumb {
+    transform: scale(1.1);
+}
+
+/* --- Smooth Select Dropdown --- */
+.form-group select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    padding-right: 40px;
+}
+
+/* --- Hover Underline Effect for Links --- */
+.course-link,
+.footer-col a {
+    position: relative;
+}
+
+.course-link::after,
+.footer-col a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: currentColor;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.course-link:hover::after,
+.footer-col a:hover::after {
+    width: 100%;
+}
+
+/* --- Smooth Table Rows --- */
+.batch-table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.batch-table tbody tr:hover {
+    background: rgba(0, 212, 255, 0.05);
+    transform: scale(1.01);
+}
+
+/* --- Enhanced Seats Badge --- */
+.seats-badge {
+    transition: all 0.3s ease;
+}
+
+.seats-badge.urgent {
+    animation: urgentPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes urgentPulse {
+    0%, 100% { 
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+    }
+    50% { 
+        box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
+    }
+}
+
+/* --- Smooth Icon Hover --- */
+.facility-card i,
+.infra-card i,
+.why-icon i,
+.course-icon i {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.facility-card:hover i,
+.infra-card:hover i,
+.why-card:hover .why-icon i,
+.course-card:hover .course-icon i {
+    transform: scale(1.15) rotate(5deg);
+}
+
+/* --- Smooth Map Container --- */
+.map-container {
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    transition: all 0.3s ease;
+}
+
+.map-container:hover {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.map-container iframe {
+    transition: transform 0.5s ease;
+}
+
+.map-container:hover iframe {
+    transform: scale(1.02);
+}
+
+/* --- Smooth Virtual Tour Preview --- */
+.tour-preview,
+.tour-placeholder {
+    transition: all 0.4s ease;
+}
+
+.tour-preview:hover .tour-placeholder {
+    transform: scale(1.05);
+}
+
+.tour-placeholder i {
+    transition: all 0.3s ease;
+}
+
+.tour-preview:hover .tour-placeholder i {
+    transform: scale(1.2);
+    color: var(--school-accent);
+}
+
+/* --- Enhanced Donut Chart --- */
+.donut-circle {
+    transition: all 0.4s ease;
+}
+
+.chart-card:hover .donut-circle {
+    transform: scale(1.05);
+}
+
+/* --- Smooth Breadcrumb --- */
+.breadcrumb {
+    transition: all 0.3s ease;
+}
+
+.breadcrumb i {
+    transition: transform 0.3s ease;
+}
+
+.breadcrumb:hover i {
+    transform: translateX(3px);
+}
+
+/* --- Loading State for Buttons --- */
+.btn-loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.btn-loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: btnSpin 0.8s linear infinite;
+    margin-left: 8px;
+}
+
+@keyframes btnSpin {
+    to { transform: rotate(360deg); }
+}
+
+/* --- Smooth Scroll Snap for Carousels --- */
+.faculty-track,
+.testimonials-carousel {
+    scroll-snap-type: x mandatory;
+}
+
+.faculty-card,
+.testimonial-card {
+    scroll-snap-align: center;
+}
+
+/* --- Enhanced Focus States --- */
+.split:focus-visible {
+    outline: none;
+}
+
+.split:focus-visible .landing-content {
+    transform: scale(1.05);
+}
+
+.split:focus-visible .cta-btn {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+}
+
+/* --- Smooth Page Section Transitions --- */
+section {
+    position: relative;
+}
+
+section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+}
+
+/* --- Final Touch: Smooth Everything --- */
+*, *::before, *::after {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Exclude elements that need instant response */
+input, textarea, select,
+.scroll-progress,
+.ripple {
+    transition-timing-function: linear;
+}
+
+
+/* ============================================
+   46. PAGE VISIBILITY FIX
+   ============================================ */
+
+/* Both pages hidden by default */
+#institute-page {
+    display: none;
+}
+
+#school-page {
+    display: none;
 }

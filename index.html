@@ -3,190 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elixir Group | Education Ecosystem</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Elixir Group | Education Ecosystem - JEE, NEET, CBSE, IB</title>
+    <meta name="description" content="Elixir Education Ecosystem - Premier coaching for JEE, NEET preparation and International School with CBSE, IB curriculum. Join 450+ IIT selections.">
+    <meta name="keywords" content="JEE coaching, NEET preparation, CBSE school, IB curriculum, Elixir Institute, Elixir School">
+    <meta name="author" content="Elixir Group">
+    <meta property="og:title" content="Elixir Group | Education Ecosystem">
+    <meta property="og:description" content="Premier coaching for JEE, NEET and International School education">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://elixireducation.com">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* --- 1. GLOBAL VARIABLES & RESET --- */
-        :root {
-            --inst-bg: #0a192f;
-            --inst-accent: #00d4ff; /* Neon Cyan */
-            --inst-text: #e6f1ff;
-            
-            --school-bg: #0f2e22;
-            --school-accent: #50c878; /* Emerald */
-            --school-gold: #ffd700;
-            
-            --speed: 0.8s;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { overflow-x: hidden; background: #000; }
-        
-        /* Utility Classes */
-        .hidden { display: none; }
-        .btn { cursor: pointer; }
-
-        /* --- 2. SPLIT LANDING PAGE (The Gateway) --- */
-        .gateway-container {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100vh;
-            z-index: 100;
-            display: flex;
-            transition: transform var(--speed) cubic-bezier(0.77, 0, 0.175, 1);
-        }
-
-        /* The "Curtain Up" Effect */
-        .gateway-container.slide-up {
-            transform: translateY(-100%);
-        }
-
-        .split {
-            position: relative;
-            width: 50%; height: 100%;
-            display: flex; justify-content: center; align-items: center; text-align: center;
-            transition: width 0.5s ease;
-            overflow: hidden;
-        }
-
-        /* Left (Institute) Styling */
-        .split.left { 
-            background: linear-gradient(rgba(10, 25, 47, 0.9), rgba(10, 25, 47, 0.9)), url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1000');
-            background-size: cover; color: white; border-right: 1px solid #333;
-        }
-        
-        /* Right (School) Styling */
-        .split.right { 
-            background: linear-gradient(rgba(15, 46, 34, 0.9), rgba(15, 46, 34, 0.9)), url('https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1000');
-            background-size: cover; color: white;
-        }
-
-        /* Hover Effects */
-        .split:hover { width: 75%; }
-        .gateway-container:has(.split.left:hover) .split.right { width: 25%; }
-        .gateway-container:has(.split.right:hover) .split.left { width: 25%; }
-
-        .landing-content h1 { font-size: 3.5rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
-        .landing-content span { font-weight: 800; }
-        .left span { color: var(--inst-accent); }
-        .right span { color: var(--school-accent); }
-        
-        .cta-btn {
-            padding: 15px 40px; border: 2px solid white; color: white; text-decoration: none;
-            text-transform: uppercase; letter-spacing: 2px; font-weight: bold; margin-top: 20px;
-            display: inline-block; transition: 0.3s;
-        }
-        .split.left .cta-btn:hover { background: var(--inst-accent); border-color: var(--inst-accent); color: #000; box-shadow: 0 0 20px var(--inst-accent); }
-        .split.right .cta-btn:hover { background: var(--school-accent); border-color: var(--school-accent); color: #000; box-shadow: 0 0 20px var(--school-accent); }
-
-        /* --- 3. INTERNAL PAGES WRAPPER --- */
-        .main-content {
-            position: relative;
-            width: 100%;
-            min-height: 100vh;
-            opacity: 0;
-            transition: opacity 1s ease;
-            pointer-events: none; /* Disabled when hidden */
-        }
-
-        .main-content.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        /* Back Button */
-        .back-btn {
-            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-            z-index: 999; background: white; color: black; padding: 10px 30px;
-            border-radius: 30px; font-weight: bold; cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            display: none; /* Hidden on gateway */
-        }
-        .back-btn.show { display: block; }
-
-        /* --- 4. INSTITUTE PAGE DESIGN (JEE/NEET) --- */
-        #institute-page { background-color: var(--inst-bg); color: var(--inst-text); min-height: 100vh; display: none; }
-        
-        .inst-nav { padding: 20px 50px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,212,255,0.1); }
-        .inst-logo { font-size: 1.5rem; font-weight: bold; color: var(--inst-accent); letter-spacing: 2px; }
-        
-        .hero-section { padding: 80px 50px; display: flex; align-items: center; gap: 50px; }
-        .hero-text h2 { font-size: 4rem; line-height: 1.1; margin-bottom: 20px; background: linear-gradient(to right, #fff, var(--inst-accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px; }
-        .stat-card { background: rgba(255,255,255,0.05); padding: 20px; border-left: 4px solid var(--inst-accent); }
-        .stat-num { font-size: 2.5rem; font-weight: bold; color: white; }
-        
-        .courses-section { padding: 50px; }
-        .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 30px; }
-        .course-card { background: #112240; padding: 30px; border-radius: 10px; transition: 0.3s; border: 1px solid transparent; position: relative; overflow: hidden; }
-        .course-card:hover { transform: translateY(-10px); border-color: var(--inst-accent); }
-        .badge { position: absolute; top: 10px; right: 10px; background: var(--inst-accent); color: black; padding: 5px 10px; font-size: 0.8rem; font-weight: bold; }
-
-        /* --- 5. SCHOOL PAGE DESIGN (International) --- */
-        #school-page { background-color: var(--school-bg); color: #f0fdf4; min-height: 100vh; display: none; }
-        
-        .school-nav { padding: 20px 50px; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2); backdrop-filter: blur(10px); }
-        .school-logo { font-size: 1.5rem; font-weight: bold; color: var(--school-accent); font-family: 'Georgia', serif; }
-        
-        .school-hero { height: 80vh; background: url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1500') center/cover; position: relative; display: flex; align-items: center; justify-content: center; text-align: center; }
-        .school-hero::after { content:''; position: absolute; inset: 0; background: rgba(15, 46, 34, 0.7); }
-        .hero-content { position: relative; z-index: 2; max-width: 800px; }
-        .hero-content h2 { font-size: 3.5rem; font-family: 'Georgia', serif; margin-bottom: 20px; color: var(--school-gold); }
-        
-        .values-section { padding: 80px 50px; background: #0b2219; }
-        .value-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; text-align: center; }
-        .value-card i { color: var(--school-accent); font-size: 3rem; margin-bottom: 20px; }
-        .value-card h3 { color: var(--school-gold); margin-bottom: 15px; font-size: 1.5rem; }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .gateway-container { flex-direction: column; }
-            .split { width: 100% !important; height: 50%; }
-            .split:hover { width: 100% !important; }
-            .landing-content h1 { font-size: 2rem; }
-            .hero-section { flex-direction: column; }
-            .stats-grid { grid-template-columns: 1fr; }
-            .value-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "EducationalOrganization",
+        "name": "Elixir Education Group",
+        "description": "Premier coaching institute for JEE, NEET and International School",
+        "url": "https://elixireducation.com",
+        "sameAs": ["https://facebook.com/elixiredu", "https://instagram.com/elixiredu"]
+    }
+    </script>
 </head>
 <body>
+    <!-- Skip Link for Accessibility -->
+    <a href="#mainContent" class="skip-link">Skip to main content</a>
 
-    <button id="backBtn" class="back-btn" onclick="showGateway()">
-        <i class="fas fa-th-large"></i> Return to Hub
-    </button>
-
-    <div class="gateway-container" id="gateway">
-        <div class="split left">
-            <div class="landing-content">
-                <i class="fas fa-atom fa-3x" style="margin-bottom:20px; color:var(--inst-accent)"></i>
-                <h1>Elixir <span>Institute</span></h1>
-                <p>JEE • NEET • FOUNDATION</p>
-                <div class="cta-btn" onclick="openPage('institute')">Explore Batches</div>
-            </div>
-        </div>
-        <div class="split right">
-            <div class="landing-content">
-                <i class="fas fa-globe fa-3x" style="margin-bottom:20px; color:var(--school-accent)"></i>
-                <h1>Elixir <span>School</span></h1>
-                <p>INTERNATIONAL • CBSE • IB</p>
-                <div class="cta-btn" onclick="openPage('school')">Visit Campus</div>
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="cookie-banner hidden">
+        <div class="cookie-content">
+            <p><i class="fas fa-cookie-bite"></i> We use cookies to enhance your experience. By continuing, you agree to our cookie policy.</p>
+            <div class="cookie-actions">
+                <button onclick="acceptCookies()" class="cookie-btn accept">Accept All</button>
+                <button onclick="declineCookies()" class="cookie-btn decline">Essential Only</button>
             </div>
         </div>
     </div>
 
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/919876543210?text=Hi, I'm interested in Elixir Education" target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Live Chat Widget -->
+    <div id="chatWidget" class="chat-widget">
+        <div class="chat-header" onclick="toggleChat()">
+            <i class="fas fa-comments"></i>
+            <span>Chat with us</span>
+            <i class="fas fa-chevron-up chat-toggle-icon"></i>
+        </div>
+        <div class="chat-body hidden">
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-message bot">
+                    <p>👋 Hi! Welcome to Elixir Education. How can I help you today?</p>
+                </div>
+            </div>
+            <div class="chat-quick-replies">
+                <button onclick="sendQuickReply('Course Information')">Course Info</button>
+                <button onclick="sendQuickReply('Fee Structure')">Fees</button>
+                <button onclick="sendQuickReply('Admission Process')">Admissions</button>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleChatKeypress(event)">
+                <button onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Inquiry Form -->
+    <div id="inquiryModal" class="modal hidden">
+        <div class="modal-overlay" onclick="closeModal('inquiryModal')"></div>
+        <div class="modal-content inquiry-form">
+            <button class="modal-close" onclick="closeModal('inquiryModal')" aria-label="Close"><i class="fas fa-times"></i></button>
+            <h3><i class="fas fa-graduation-cap"></i> Quick Inquiry</h3>
+            <form id="inquiryForm" onsubmit="submitInquiry(event)">
+                <div class="form-progress">
+                    <div class="progress-step active" data-step="1">1</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step" data-step="2">2</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step" data-step="3">3</div>
+                </div>
+                <div class="form-step active" data-step="1">
+                    <div class="form-group">
+                        <label for="inqName">Full Name *</label>
+                        <input type="text" id="inqName" required placeholder="Enter your name">
+                    </div>
+                    <div class="form-group">
+                        <label for="inqPhone">Phone Number *</label>
+                        <input type="tel" id="inqPhone" required placeholder="10-digit mobile number" pattern="[0-9]{10}">
+                    </div>
+                    <button type="button" class="btn-next" onclick="nextStep(1)">Next <i class="fas fa-arrow-right"></i></button>
+                </div>
+                <div class="form-step" data-step="2">
+                    <div class="form-group">
+                        <label for="inqEmail">Email Address</label>
+                        <input type="email" id="inqEmail" placeholder="your@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="inqCourse">Interested In *</label>
+                        <select id="inqCourse" required>
+                            <option value="">Select Program</option>
+                            <optgroup label="Institute Programs">
+                                <option value="jee">JEE Advanced</option>
+                                <option value="neet">NEET Medical</option>
+                                <option value="foundation">Foundation (9-10)</option>
+                            </optgroup>
+                            <optgroup label="School Admissions">
+                                <option value="cbse">CBSE Curriculum</option>
+                                <option value="ib">IB Program</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="form-nav">
+                        <button type="button" class="btn-prev" onclick="prevStep(2)"><i class="fas fa-arrow-left"></i> Back</button>
+                        <button type="button" class="btn-next" onclick="nextStep(2)">Next <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+                <div class="form-step" data-step="3">
+                    <div class="form-group">
+                        <label for="inqMessage">Message (Optional)</label>
+                        <textarea id="inqMessage" rows="3" placeholder="Any specific queries?"></textarea>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="inqCallback" name="callback">
+                        <label for="inqCallback">Request a callback</label>
+                    </div>
+                    <div class="form-group callback-time hidden" id="callbackTimeGroup">
+                        <label for="inqCallbackTime">Preferred Time</label>
+                        <select id="inqCallbackTime">
+                            <option value="morning">Morning (9AM - 12PM)</option>
+                            <option value="afternoon">Afternoon (12PM - 4PM)</option>
+                            <option value="evening">Evening (4PM - 7PM)</option>
+                        </select>
+                    </div>
+                    <div class="form-nav">
+                        <button type="button" class="btn-prev" onclick="prevStep(3)"><i class="fas fa-arrow-left"></i> Back</button>
+                        <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> Submit Inquiry</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Sticky CTA Bar -->
+    <div id="stickyCta" class="sticky-cta hidden">
+        <div class="sticky-cta-content">
+            <span><i class="fas fa-fire"></i> Admissions Open for 2025-26 Batch!</span>
+            <button onclick="openModal('inquiryModal')">Apply Now <i class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <button id="backBtn" class="back-btn" onclick="showGateway()" aria-label="Return to main page">
+        <i class="fas fa-th-large"></i> Return to Hub
+    </button>
+
+    <!-- Gateway Split Screen -->
+    <div class="gateway-container" id="gateway">
+        <div class="split left" tabindex="0" role="button" aria-label="Explore Elixir Institute" onclick="openPage('institute')" onkeypress="handleGatewayKeypress(event, 'institute')">
+            <div class="landing-content">
+                <i class="fas fa-atom fa-3x" style="margin-bottom:20px; color:var(--inst-accent)"></i>
+                <h1>Elixir <span>Institute</span></h1>
+                <p>JEE • NEET • FOUNDATION</p>
+                <div class="cta-btn">Explore Batches</div>
+            </div>
+        </div>
+        <div class="split right" tabindex="0" role="button" aria-label="Visit Elixir School" onclick="openPage('school')" onkeypress="handleGatewayKeypress(event, 'school')">
+            <div class="landing-content">
+                <i class="fas fa-globe fa-3x" style="margin-bottom:20px; color:var(--school-accent)"></i>
+                <h1>Elixir <span>School</span></h1>
+                <p>INTERNATIONAL • CBSE • IB</p>
+                <div class="cta-btn">Visit Campus</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
     <div class="main-content" id="mainContent">
         
-        <section id="institute-page">
-            <nav class="inst-nav">
-                <div class="inst-logo">ELIXIR <span style="color:white">INSTITUTE</span></div>
-                <div style="display:flex; gap:20px; color: #8892b0;">
-                    <span>Results</span>
-                    <span>Faculty</span>
-                    <span style="color:var(--inst-accent)">Admissions Open</span>
-                </div>
+        <!-- ==================== INSTITUTE PAGE ==================== -->
+        <section id="institute-page" style="display: none;">
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+                <a href="#" onclick="showGateway(); return false;">Home</a>
+                <i class="fas fa-chevron-right"></i>
+                <span>Institute</span>
             </nav>
 
+            <nav class="inst-nav">
+                <div class="inst-logo">ELIXIR <span style="color:white">INSTITUTE</span></div>
+                <div class="nav-links">
+                    <a href="#inst-results" class="nav-link">Results</a>
+                    <a href="#inst-faculty" class="nav-link">Faculty</a>
+                    <a href="#inst-fees" class="nav-link">Fees</a>
+                    <a href="#inst-faq" class="nav-link">FAQ</a>
+                    <button class="nav-cta" onclick="openModal('inquiryModal')">Admissions Open</button>
+                </div>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu('inst')" aria-label="Toggle menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+
+            <!-- Accreditation Badges -->
+            <div class="accreditation-bar">
+                <div class="accreditation-content">
+                    <span class="accred-label">Recognized & Affiliated:</span>
+                    <div class="accred-badges">
+                        <div class="accred-badge" title="Ministry of Education">
+                            <i class="fas fa-university"></i>
+                            <span>MoE Approved</span>
+                        </div>
+                        <div class="accred-badge" title="National Testing Agency">
+                            <i class="fas fa-award"></i>
+                            <span>NTA Partner</span>
+                        </div>
+                        <div class="accred-badge" title="ISO Certified">
+                            <i class="fas fa-certificate"></i>
+                            <span>ISO 9001:2015</span>
+                        </div>
+                        <div class="accred-badge" title="NAAC Accredited">
+                            <i class="fas fa-star"></i>
+                            <span>NAAC A+</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Section -->
             <div class="hero-section">
                 <div class="hero-text">
                     <h4>SCIENTIFIC PEDAGOGY</h4>
@@ -194,95 +241,1318 @@
                     <p style="color:#8892b0; max-width: 500px; font-size: 1.1rem; margin-bottom:30px;">
                         Join the league of top rankers. Our AI-driven testing modules and expert faculty ensure you stay ahead of the curve.
                     </p>
+                    <div class="hero-cta-group">
+                        <button class="primary-btn" onclick="openModal('inquiryModal')"><i class="fas fa-rocket"></i> Start Your Journey</button>
+                        <button class="secondary-btn" onclick="scrollToSection('inst-courses')"><i class="fas fa-book"></i> View Courses</button>
+                    </div>
                     <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-num">450+</div>
+                        <div class="stat-card" data-count="450">
+                            <div class="stat-num">0+</div>
                             <div>IIT Selections</div>
                         </div>
-                        <div class="stat-card">
-                            <div class="stat-num">120+</div>
+                        <div class="stat-card" data-count="120">
+                            <div class="stat-num">0+</div>
                             <div>AIIMS Seats</div>
                         </div>
-                        <div class="stat-card">
-                            <div class="stat-num">AIR 5</div>
+                        <div class="stat-card" data-count="5">
+                            <div class="stat-num">AIR 0</div>
                             <div>Top Rank 2024</div>
                         </div>
                     </div>
                 </div>
-                <div style="flex:1; height: 400px; background: radial-gradient(circle, rgba(0,212,255,0.1) 0%, rgba(10,25,47,0) 70%); display:flex; justify-content:center; align-items:center;">
-                    <i class="fas fa-dna fa-10x" style="color: var(--inst-accent); opacity: 0.2;"></i>
+                <div class="hero-visual">
+                    <i class="fas fa-dna fa-10x"></i>
                 </div>
             </div>
 
-            <div class="courses-section">
-                <h3 style="font-size: 2rem; margin-bottom: 20px;">Our Flagship Programs</h3>
-                <div class="course-grid">
-                    <div class="course-card">
-                        <div class="badge">POPULAR</div>
-                        <h3 style="color:white; margin-bottom:10px;">JEE Advanced '26</h3>
-                        <p style="color:#8892b0; margin-bottom:20px;">Two-year integrated classroom program for Class 11th students.</p>
-                        <a href="#" style="color:var(--inst-accent); text-decoration:none; font-weight:bold;">View Syllabus &rarr;</a>
+            <!-- About & Why Choose Us Section -->
+            <section class="about-section">
+                <div class="section-header">
+                    <span class="section-tag">ABOUT US</span>
+                    <h2>Our Legacy of Excellence</h2>
+                </div>
+                <div class="about-content">
+                    <div class="founder-message">
+                        <div class="founder-img"><i class="fas fa-user-tie"></i></div>
+                        <div class="founder-text">
+                            <h3>Message from the Director</h3>
+                            <blockquote>"At Elixir Institute, we don't just prepare students for exams—we build future innovators. Our scientific approach combines rigorous academics with personalized mentorship to unlock every student's potential."</blockquote>
+                            <p class="founder-name">— Dr. Vikram Sharma, Founder & Director</p>
+                            <p class="founder-credentials">IIT Delhi Gold Medalist | 25+ Years in Education</p>
+                        </div>
                     </div>
-                    <div class="course-card">
-                        <h3 style="color:white; margin-bottom:10px;">NEET Medical</h3>
-                        <p style="color:#8892b0; margin-bottom:20px;">Comprehensive biology, physics, and chemistry mastery for medical aspirants.</p>
-                        <a href="#" style="color:var(--inst-accent); text-decoration:none; font-weight:bold;">View Syllabus &rarr;</a>
-                    </div>
-                    <div class="course-card">
-                        <h3 style="color:white; margin-bottom:10px;">Foundation X</h3>
-                        <p style="color:#8892b0; margin-bottom:20px;">Build strong fundamentals for Class 9 & 10 for future success.</p>
-                        <a href="#" style="color:var(--inst-accent); text-decoration:none; font-weight:bold;">View Syllabus &rarr;</a>
+                    <div class="why-choose-grid">
+                        <div class="why-card">
+                            <div class="why-icon"><i class="fas fa-brain"></i></div>
+                            <h4>AI-Powered Learning</h4>
+                            <p>Adaptive testing and personalized study plans based on your performance analytics</p>
+                        </div>
+                        <div class="why-card">
+                            <div class="why-icon"><i class="fas fa-users-cog"></i></div>
+                            <h4>1:15 Faculty Ratio</h4>
+                            <p>Small batch sizes ensure individual attention and doubt resolution</p>
+                        </div>
+                        <div class="why-card">
+                            <div class="why-icon"><i class="fas fa-chart-line"></i></div>
+                            <h4>95% Success Rate</h4>
+                            <p>Consistent track record of selections in top IITs and medical colleges</p>
+                        </div>
+                        <div class="why-card">
+                            <div class="why-icon"><i class="fas fa-laptop-house"></i></div>
+                            <h4>Hybrid Learning</h4>
+                            <p>Seamless online + offline classes with recorded lectures access</p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </section>
+
+            <!-- Results Statistics Section -->
+            <section class="results-stats-section">
+                <div class="section-header">
+                    <span class="section-tag">2024 RESULTS</span>
+                    <h2>Our Numbers Speak</h2>
+                </div>
+                <div class="stats-charts">
+                    <div class="chart-card">
+                        <h4>JEE Advanced Selections</h4>
+                        <div class="bar-chart">
+                            <div class="bar-item">
+                                <span class="bar-label">2024</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 90%;" data-value="450"></div></div>
+                                <span class="bar-value">450</span>
+                            </div>
+                            <div class="bar-item">
+                                <span class="bar-label">2023</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 80%;" data-value="398"></div></div>
+                                <span class="bar-value">398</span>
+                            </div>
+                            <div class="bar-item">
+                                <span class="bar-label">2022</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 70%;" data-value="352"></div></div>
+                                <span class="bar-value">352</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h4>NEET Selections</h4>
+                        <div class="bar-chart">
+                            <div class="bar-item">
+                                <span class="bar-label">2024</span>
+                                <div class="bar-track"><div class="bar-fill neet" style="width: 85%;" data-value="320"></div></div>
+                                <span class="bar-value">320</span>
+                            </div>
+                            <div class="bar-item">
+                                <span class="bar-label">2023</span>
+                                <div class="bar-track"><div class="bar-fill neet" style="width: 75%;" data-value="285"></div></div>
+                                <span class="bar-value">285</span>
+                            </div>
+                            <div class="bar-item">
+                                <span class="bar-label">2022</span>
+                                <div class="bar-track"><div class="bar-fill neet" style="width: 65%;" data-value="248"></div></div>
+                                <span class="bar-value">248</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-card highlight-card">
+                        <h4>Top 100 AIR Achievers</h4>
+                        <div class="donut-stat">
+                            <div class="donut-circle">
+                                <span class="donut-value">23</span>
+                                <span class="donut-label">Students</span>
+                            </div>
+                        </div>
+                        <p>in Top 100 All India Rank (JEE + NEET combined)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Media & Awards Section -->
+            <section class="awards-section">
+                <div class="section-header">
+                    <span class="section-tag">RECOGNITION</span>
+                    <h2>Awards & Media</h2>
+                </div>
+                <div class="awards-grid">
+                    <div class="award-card">
+                        <i class="fas fa-trophy"></i>
+                        <h4>Best Coaching Institute 2024</h4>
+                        <p>Education Excellence Awards</p>
+                    </div>
+                    <div class="award-card">
+                        <i class="fas fa-newspaper"></i>
+                        <h4>Featured in Times of India</h4>
+                        <p>"Revolutionizing JEE Prep"</p>
+                    </div>
+                    <div class="award-card">
+                        <i class="fas fa-medal"></i>
+                        <h4>Top 10 NEET Institutes</h4>
+                        <p>India Today Rankings 2024</p>
+                    </div>
+                    <div class="award-card">
+                        <i class="fas fa-star"></i>
+                        <h4>4.9★ Google Rating</h4>
+                        <p>2000+ Reviews</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Gallery Section -->
+            <section id="inst-results" class="results-section">
+                <div class="section-header">
+                    <span class="section-tag">OUR PRIDE</span>
+                    <h2>Topper's Gallery 2024</h2>
+                    <p>Meet our star performers who made us proud</p>
+                </div>
+                <div class="results-filter">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="jee">JEE</button>
+                    <button class="filter-btn" data-filter="neet">NEET</button>
+                </div>
+                <div class="toppers-grid">
+                    <div class="topper-card" data-category="jee">
+                        <div class="topper-rank">AIR 5</div>
+                        <div class="topper-img"><i class="fas fa-user-graduate"></i></div>
+                        <h4>Rahul Sharma</h4>
+                        <p>JEE Advanced 2024</p>
+                        <span class="topper-score">Score: 312/360</span>
+                    </div>
+                    <div class="topper-card" data-category="neet">
+                        <div class="topper-rank">AIR 12</div>
+                        <div class="topper-img"><i class="fas fa-user-graduate"></i></div>
+                        <h4>Priya Patel</h4>
+                        <p>NEET 2024</p>
+                        <span class="topper-score">Score: 705/720</span>
+                    </div>
+                    <div class="topper-card" data-category="jee">
+                        <div class="topper-rank">AIR 23</div>
+                        <div class="topper-img"><i class="fas fa-user-graduate"></i></div>
+                        <h4>Amit Kumar</h4>
+                        <p>JEE Advanced 2024</p>
+                        <span class="topper-score">Score: 298/360</span>
+                    </div>
+                    <div class="topper-card" data-category="neet">
+                        <div class="topper-rank">AIR 45</div>
+                        <div class="topper-img"><i class="fas fa-user-graduate"></i></div>
+                        <h4>Sneha Reddy</h4>
+                        <p>NEET 2024</p>
+                        <span class="topper-score">Score: 695/720</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Faculty Section -->
+            <section id="inst-faculty" class="faculty-section">
+                <div class="section-header">
+                    <span class="section-tag">EXPERT MENTORS</span>
+                    <h2>Meet Our Faculty</h2>
+                    <p>Learn from the best minds in competitive exam preparation</p>
+                </div>
+                <div class="faculty-carousel">
+                    <button class="carousel-btn prev" onclick="slideFaculty(-1)" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+                    <div class="faculty-track" id="facultyTrack">
+                        <div class="faculty-card">
+                            <div class="faculty-img"><i class="fas fa-chalkboard-teacher"></i></div>
+                            <h4>Dr. Rajesh Verma</h4>
+                            <span class="faculty-subject">Physics</span>
+                            <p>IIT Delhi, 15+ years experience</p>
+                            <div class="faculty-stats">
+                                <span><i class="fas fa-star"></i> 4.9</span>
+                                <span><i class="fas fa-users"></i> 5000+ students</span>
+                            </div>
+                        </div>
+                        <div class="faculty-card">
+                            <div class="faculty-img"><i class="fas fa-chalkboard-teacher"></i></div>
+                            <h4>Prof. Meera Singh</h4>
+                            <span class="faculty-subject">Chemistry</span>
+                            <p>IIT Bombay, 12+ years experience</p>
+                            <div class="faculty-stats">
+                                <span><i class="fas fa-star"></i> 4.8</span>
+                                <span><i class="fas fa-users"></i> 4500+ students</span>
+                            </div>
+                        </div>
+                        <div class="faculty-card">
+                            <div class="faculty-img"><i class="fas fa-chalkboard-teacher"></i></div>
+                            <h4>Dr. Anil Gupta</h4>
+                            <span class="faculty-subject">Mathematics</span>
+                            <p>IIT Kanpur, 18+ years experience</p>
+                            <div class="faculty-stats">
+                                <span><i class="fas fa-star"></i> 4.9</span>
+                                <span><i class="fas fa-users"></i> 6000+ students</span>
+                            </div>
+                        </div>
+                        <div class="faculty-card">
+                            <div class="faculty-img"><i class="fas fa-chalkboard-teacher"></i></div>
+                            <h4>Dr. Sunita Rao</h4>
+                            <span class="faculty-subject">Biology</span>
+                            <p>AIIMS Delhi, 14+ years experience</p>
+                            <div class="faculty-stats">
+                                <span><i class="fas fa-star"></i> 4.9</span>
+                                <span><i class="fas fa-users"></i> 4000+ students</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-btn next" onclick="slideFaculty(1)" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </section>
+
+            <!-- Courses Section -->
+            <section id="inst-courses" class="courses-section">
+                <div class="section-header">
+                    <span class="section-tag">PROGRAMS</span>
+                    <h2>Our Flagship Programs</h2>
+                </div>
+                <div class="course-grid">
+                    <div class="course-card" data-aos="fade-up">
+                        <div class="badge">POPULAR</div>
+                        <div class="course-icon"><i class="fas fa-atom"></i></div>
+                        <h3>JEE Advanced '26</h3>
+                        <p>Two-year integrated classroom program for Class 11th students.</p>
+                        <ul class="course-features">
+                            <li><i class="fas fa-check"></i> 500+ hours of live classes</li>
+                            <li><i class="fas fa-check"></i> Weekly tests & analysis</li>
+                            <li><i class="fas fa-check"></i> Doubt clearing sessions</li>
+                        </ul>
+                        <div class="course-footer">
+                            <span class="course-duration"><i class="fas fa-clock"></i> 2 Years</span>
+                            <a href="#" class="course-link" onclick="openModal('inquiryModal'); return false;">Enroll Now <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="course-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="course-icon"><i class="fas fa-heartbeat"></i></div>
+                        <h3>NEET Medical</h3>
+                        <p>Comprehensive biology, physics, and chemistry mastery for medical aspirants.</p>
+                        <ul class="course-features">
+                            <li><i class="fas fa-check"></i> NCERT focused approach</li>
+                            <li><i class="fas fa-check"></i> 100+ mock tests</li>
+                            <li><i class="fas fa-check"></i> Personal mentorship</li>
+                        </ul>
+                        <div class="course-footer">
+                            <span class="course-duration"><i class="fas fa-clock"></i> 1-2 Years</span>
+                            <a href="#" class="course-link" onclick="openModal('inquiryModal'); return false;">Enroll Now <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="course-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="course-icon"><i class="fas fa-seedling"></i></div>
+                        <h3>Foundation X</h3>
+                        <p>Build strong fundamentals for Class 9 & 10 for future success.</p>
+                        <ul class="course-features">
+                            <li><i class="fas fa-check"></i> Board + competitive prep</li>
+                            <li><i class="fas fa-check"></i> Olympiad training</li>
+                            <li><i class="fas fa-check"></i> Concept building</li>
+                        </ul>
+                        <div class="course-footer">
+                            <span class="course-duration"><i class="fas fa-clock"></i> 1 Year</span>
+                            <a href="#" class="course-link" onclick="openModal('inquiryModal'); return false;">Enroll Now <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+span>""
+       
+            <!-- Infrastructure Section -->
+            <section class="infrastructure-section">
+                <div class="section-header">
+                    <span class="section-tag">FACILITIES</span>
+                    <h2>World-Class Infrastructure</h2>
+                </div>
+                <div class="infra-grid">
+                    <div class="infra-card">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <h4>Smart Classrooms</h4>
+                        <p>AC classrooms with digital boards and live streaming capability</p>
+                    </div>
+                    <div class="infra-card">
+                        <i class="fas fa-flask"></i>
+                        <h4>Advanced Labs</h4>
+                        <p>Physics, Chemistry & Biology labs with modern equipment</p>
+                    </div>
+                    <div class="infra-card">
+                        <i class="fas fa-book-open"></i>
+                        <h4>Library</h4>
+                        <p>10,000+ books, journals, and digital resources</p>
+                    </div>
+                    <div class="infra-card">
+                        <i class="fas fa-laptop"></i>
+                        <h4>Computer Lab</h4>
+                        <p>100+ systems for online tests and practice</p>
+                    </div>
+                    <div class="infra-card">
+                        <i class="fas fa-utensils"></i>
+                        <h4>Cafeteria</h4>
+                        <p>Hygienic food court with nutritious meal options</p>
+                    </div>
+                    <div class="infra-card">
+                        <i class="fas fa-bed"></i>
+                        <h4>Hostel</h4>
+                        <p>Separate boys/girls hostels with 24/7 security</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Important Dates / Exam Calendar -->
+            <section class="exam-calendar-section">
+                <div class="section-header">
+                    <span class="section-tag">MARK YOUR CALENDAR</span>
+                    <h2>Important Dates 2025</h2>
+                </div>
+                <div class="calendar-grid">
+                    <div class="calendar-card">
+                        <div class="cal-icon jee"><i class="fas fa-atom"></i></div>
+                        <div class="cal-info">
+                            <h4>JEE Main 2025</h4>
+                            <p class="cal-date">Session 1: Jan 22-31, 2025</p>
+                            <p class="cal-date">Session 2: Apr 1-15, 2025</p>
+                        </div>
+                    </div>
+                    <div class="calendar-card">
+                        <div class="cal-icon jee"><i class="fas fa-rocket"></i></div>
+                        <div class="cal-info">
+                            <h4>JEE Advanced 2025</h4>
+                            <p class="cal-date">May 18, 2025</p>
+                            <p class="cal-note">Registration opens after JEE Main results</p>
+                        </div>
+                    </div>
+                    <div class="calendar-card">
+                        <div class="cal-icon neet"><i class="fas fa-heartbeat"></i></div>
+                        <div class="cal-info">
+                            <h4>NEET UG 2025</h4>
+                            <p class="cal-date">May 4, 2025</p>
+                            <p class="cal-note">Application deadline: March 2025</p>
+                        </div>
+                    </div>
+                    <div class="calendar-card">
+                        <div class="cal-icon elsat"><i class="fas fa-graduation-cap"></i></div>
+                        <div class="cal-info">
+                            <h4>ELSAT (Scholarship Test)</h4>
+                            <p class="cal-date">Every Sunday</p>
+                            <p class="cal-note">Up to 50% scholarship available</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Downloadable Resources -->
+            <section class="downloads-section">
+                <div class="section-header">
+                    <span class="section-tag">RESOURCES</span>
+                    <h2>Download Brochures</h2>
+                </div>
+                <div class="downloads-grid">
+                    <a href="#" class="download-card" onclick="showToast('info', 'Download Started', 'JEE brochure downloading...'); return false;">
+                        <i class="fas fa-file-pdf"></i>
+                        <div>
+                            <h4>JEE Program Brochure</h4>
+                            <span>PDF • 2.5 MB</span>
+                        </div>
+                        <i class="fas fa-download"></i>
+                    </a>
+                    <a href="#" class="download-card" onclick="showToast('info', 'Download Started', 'NEET brochure downloading...'); return false;">
+                        <i class="fas fa-file-pdf"></i>
+                        <div>
+                            <h4>NEET Program Brochure</h4>
+                            <span>PDF • 2.3 MB</span>
+                        </div>
+                        <i class="fas fa-download"></i>
+                    </a>
+                    <a href="#" class="download-card" onclick="showToast('info', 'Download Started', 'Fee structure downloading...'); return false;">
+                        <i class="fas fa-file-alt"></i>
+                        <div>
+                            <h4>Fee Structure 2025-26</h4>
+                            <span>PDF • 500 KB</span>
+                        </div>
+                        <i class="fas fa-download"></i>
+                    </a>
+                    <a href="#" class="download-card" onclick="showToast('info', 'Download Started', 'Sample papers downloading...'); return false;">
+                        <i class="fas fa-file-archive"></i>
+                        <div>
+                            <h4>Sample Papers (Free)</h4>
+                            <span>ZIP • 15 MB</span>
+                        </div>
+                        <i class="fas fa-download"></i>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Photo Gallery -->
+            <section class="gallery-section">
+                <div class="section-header">
+                    <span class="section-tag">CAMPUS LIFE</span>
+                    <h2>Photo Gallery</h2>
+                </div>
+                <div class="gallery-grid">
+                    <div class="gallery-item" onclick="openLightbox('Classroom Session', 'Interactive learning in our smart classrooms')">
+                        <div class="gallery-placeholder"><i class="fas fa-chalkboard-teacher"></i></div>
+                        <div class="gallery-overlay"><span>Classroom</span></div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox('Lab Practical', 'Hands-on experiments in our advanced labs')">
+                        <div class="gallery-placeholder"><i class="fas fa-flask"></i></div>
+                        <div class="gallery-overlay"><span>Lab</span></div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox('Library', 'Quiet study environment with vast resources')">
+                        <div class="gallery-placeholder"><i class="fas fa-book"></i></div>
+                        <div class="gallery-overlay"><span>Library</span></div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox('Result Day', 'Celebrating our toppers achievements')">
+                        <div class="gallery-placeholder"><i class="fas fa-trophy"></i></div>
+                        <div class="gallery-overlay"><span>Results</span></div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox('Seminar Hall', 'Guest lectures and motivational sessions')">
+                        <div class="gallery-placeholder"><i class="fas fa-users"></i></div>
+                        <div class="gallery-overlay"><span>Seminars</span></div>
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox('Campus View', 'Our beautiful campus infrastructure')">
+                        <div class="gallery-placeholder"><i class="fas fa-building"></i></div>
+                        <div class="gallery-overlay"><span>Campus</span></div>
+                    </div>
+                </div>
+            </section>
+
+     <!-- Fee Structure Section -->
+            <section id="inst-fees" class="fees-section">
+                <div class="section-header">
+                    <span class="section-tag">INVESTMENT</span>
+                    <h2>Fee Structure</h2>
+                    <p>Transparent pricing with flexible payment options</p>
+                </div>
+                <div class="fees-grid">
+                    <div class="fee-card">
+                        <div class="fee-header">
+                            <h3>JEE Advanced</h3>
+                            <div class="fee-price">₹1,50,000<span>/year</span></div>
+                        </div>
+                        <div class="fee-body">
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> Complete study material</li>
+                                <li><i class="fas fa-check-circle"></i> Online test series</li>
+                                <li><i class="fas fa-check-circle"></i> Doubt sessions</li>
+                                <li><i class="fas fa-check-circle"></i> Performance analytics</li>
+                            </ul>
+                            <div class="fee-scholarship">
+                                <i class="fas fa-gift"></i> Up to 50% scholarship available
+                            </div>
+                        </div>
+                        <details class="fee-details">
+                            <summary>View Payment Options</summary>
+                            <div class="payment-options">
+                                <p><strong>One-time:</strong> ₹1,50,000 (5% discount)</p>
+                                <p><strong>Quarterly:</strong> ₹40,000 × 4</p>
+                                <p><strong>Monthly EMI:</strong> ₹13,500 × 12</p>
+                            </div>
+                        </details>
+                        <button class="fee-cta" onclick="openModal('inquiryModal')">Get Quote</button>
+                    </div>
+                    <div class="fee-card featured">
+                        <div class="featured-badge">MOST POPULAR</div>
+                        <div class="fee-header">
+                            <h3>NEET Medical</h3>
+                            <div class="fee-price">₹1,25,000<span>/year</span></div>
+                        </div>
+                        <div class="fee-body">
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> NCERT-focused material</li>
+                                <li><i class="fas fa-check-circle"></i> 100+ mock tests</li>
+                                <li><i class="fas fa-check-circle"></i> Personal mentor</li>
+                                <li><i class="fas fa-check-circle"></i> AIIMS special batch</li>
+                            </ul>
+                            <div class="fee-scholarship">
+                                <i class="fas fa-gift"></i> Merit scholarships available
+                            </div>
+                        </div>
+                        <details class="fee-details">
+                            <summary>View Payment Options</summary>
+                            <div class="payment-options">
+                                <p><strong>One-time:</strong> ₹1,25,000 (5% discount)</p>
+                                <p><strong>Quarterly:</strong> ₹33,000 × 4</p>
+                                <p><strong>Monthly EMI:</strong> ₹11,000 × 12</p>
+                            </div>
+                        </details>
+                        <button class="fee-cta" onclick="openModal('inquiryModal')">Get Quote</button>
+                    </div>
+                    <div class="fee-card">
+                        <div class="fee-header">
+                            <h3>Foundation</h3>
+                            <div class="fee-price">₹75,000<span>/year</span></div>
+                        </div>
+                        <div class="fee-body">
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> Board exam prep</li>
+                                <li><i class="fas fa-check-circle"></i> Olympiad training</li>
+                                <li><i class="fas fa-check-circle"></i> Weekly tests</li>
+                                <li><i class="fas fa-check-circle"></i> Parent meetings</li>
+                            </ul>
+                            <div class="fee-scholarship">
+                                <i class="fas fa-gift"></i> Sibling discount: 10%
+                            </div>
+                        </div>
+                        <details class="fee-details">
+                            <summary>View Payment Options</summary>
+                            <div class="payment-options">
+                                <p><strong>One-time:</strong> ₹75,000 (5% discount)</p>
+                                <p><strong>Quarterly:</strong> ₹20,000 × 4</p>
+                                <p><strong>Monthly EMI:</strong> ₹6,800 × 12</p>
+                            </div>
+                        </details>
+                        <button class="fee-cta" onclick="openModal('inquiryModal')">Get Quote</button>
+                    </div>
+                </div>
+                <!-- Fee Calculator -->
+                <div class="fee-calculator">
+                    <h3><i class="fas fa-calculator"></i> Fee Calculator</h3>
+                    <div class="calculator-form">
+                        <div class="calc-group">
+                            <label>Select Course</label>
+                            <select id="calcCourse" onchange="calculateFee()">
+                                <option value="150000">JEE Advanced</option>
+                                <option value="125000">NEET Medical</option>
+                                <option value="75000">Foundation</option>
+                            </select>
+                        </div>
+                        <div class="calc-group">
+                            <label>Duration (Years)</label>
+                            <input type="range" id="calcDuration" min="1" max="2" value="1" onchange="calculateFee()">
+                            <span id="durationDisplay">1 Year</span>
+                        </div>
+                        <div class="calc-group">
+                            <label>Scholarship (%)</label>
+                            <input type="range" id="calcScholarship" min="0" max="50" value="0" onchange="calculateFee()">
+                            <span id="scholarshipDisplay">0%</span>
+                        </div>
+                        <div class="calc-result">
+                            <span>Estimated Fee:</span>
+                            <strong id="calcTotal">₹1,50,000</strong>
+                        </div>
+                    </div>
+                </div>
+            </section>
+i></div></li>
+  
+          <!-- Batch Schedule Section -->
+            <section class="batch-section">
+                <div class="section-header">
+                    <span class="section-tag">UPCOMING</span>
+                    <h2>Live Batch Schedule</h2>
+                </div>
+                <div class="batch-table-wrapper">
+                    <table class="batch-table">
+                        <thead>
+                            <tr>
+                                <th>Batch Name</th>
+                                <th>Start Date</th>
+                                <th>Timing</th>
+                                <th>Seats Left</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>JEE 2026 - Morning</strong></td>
+                                <td>Jan 15, 2025 <span class="countdown" data-date="2025-01-15"></span></td>
+                                <td>7:00 AM - 10:00 AM</td>
+                                <td><span class="seats-badge urgent">5 seats</span></td>
+                                <td><button class="batch-enroll" onclick="openModal('inquiryModal')">Enroll</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>NEET 2025 - Crash Course</strong></td>
+                                <td>Jan 20, 2025 <span class="countdown" data-date="2025-01-20"></span></td>
+                                <td>2:00 PM - 6:00 PM</td>
+                                <td><span class="seats-badge">12 seats</span></td>
+                                <td><button class="batch-enroll" onclick="openModal('inquiryModal')">Enroll</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Foundation Class 10</strong></td>
+                                <td>Feb 1, 2025 <span class="countdown" data-date="2025-02-01"></span></td>
+                                <td>4:00 PM - 7:00 PM</td>
+                                <td><span class="seats-badge">20 seats</span></td>
+                                <td><button class="batch-enroll" onclick="openModal('inquiryModal')">Enroll</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Testimonials Section -->
+            <section class="testimonials-section">
+                <div class="section-header">
+                    <span class="section-tag">SUCCESS STORIES</span>
+                    <h2>What Our Students Say</h2>
+                </div>
+                <div class="testimonials-carousel">
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p>"The faculty at Elixir Institute is exceptional. Their systematic approach helped me crack JEE Advanced with AIR 23. Forever grateful!"</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar"><i class="fas fa-user"></i></div>
+                            <div>
+                                <strong>Amit Kumar</strong>
+                                <span>JEE Advanced 2024 - AIR 23</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p>"From average student to AIIMS Delhi! The personalized attention and mock tests made all the difference. Best decision of my life."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar"><i class="fas fa-user"></i></div>
+                            <div>
+                                <strong>Priya Patel</strong>
+                                <span>NEET 2024 - AIR 12</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p>"The foundation course built my concepts so strong that JEE preparation became much easier. Highly recommend for Class 9-10 students!"</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar"><i class="fas fa-user"></i></div>
+                            <div>
+                                <strong>Rohan Mehta</strong>
+                                <span>Foundation Batch 2023</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ Section -->
+            <section id="inst-faq" class="faq-section">
+                <div class="section-header">
+                    <span class="section-tag">QUESTIONS?</span>
+                    <h2>Frequently Asked Questions</h2>
+                </div>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+                            <span>What is the admission process for JEE/NEET batches?</span>
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Admission is based on an entrance test (ELSAT) conducted every month. Students can also get direct admission based on their board exam scores or previous competitive exam ranks. Scholarships up to 50% are available based on test performance.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+                            <span>Do you provide hostel facilities?</span>
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes, we have separate hostel facilities for boys and girls with 24/7 security, nutritious meals, and supervised study hours. The hostel fee is ₹8,000/month including food and accommodation.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+                            <span>What study materials are provided?</span>
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Students receive comprehensive study modules, DPP (Daily Practice Problems), previous year papers with solutions, formula sheets, and access to our online learning portal with video lectures and practice tests.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+                            <span>Is there a refund policy?</span>
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes, we offer a 15-day trial period. If you're not satisfied, you can get a full refund (minus processing fee). After 15 days, refunds are prorated based on the remaining course duration.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
+                            <span>How are doubt sessions conducted?</span>
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>We have dedicated doubt clearing sessions after each class. Additionally, students can book 1-on-1 sessions with faculty through our app. Online doubt support is available 24/7 through our discussion forum.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Newsletter Section -->
+            <section class="newsletter-section inst-newsletter">
+                <div class="newsletter-content">
+                    <h3><i class="fas fa-envelope"></i> Stay Updated</h3>
+                    <p>Get exam tips, important dates, and exclusive offers directly in your inbox</p>
+                    <form class="newsletter-form" onsubmit="subscribeNewsletter(event, 'institute')">
+                        <input type="email" placeholder="Enter your email" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Institute Footer -->
+            <footer class="inst-footer">
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <h4>Elixir Institute</h4>
+                        <p>Transforming aspirations into achievements since 2010. Join 10,000+ successful students.</p>
+                        <div class="social-links">
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="#inst-results">Results</a></li>
+                            <li><a href="#inst-faculty">Faculty</a></li>
+                            <li><a href="#inst-fees">Fee Structure</a></li>
+                            <li><a href="#inst-faq">FAQ</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Programs</h4>
+                        <ul>
+                            <li><a href="#">JEE Advanced</a></li>
+                            <li><a href="#">NEET Medical</a></li>
+                            <li><a href="#">Foundation</a></li>
+                            <li><a href="#">Crash Courses</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Contact Us</h4>
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Education Hub, Knowledge City</p>
+                        <p><i class="fas fa-phone"></i> +91 98765 43210</p>
+                        <p><i class="fas fa-envelope"></i> info@elixirinstitute.com</p>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Elixir Institute. All rights reserved.</p>
+                </div>
+            </footer>
         </section>
 
-        <section id="school-page">
-            <nav class="school-nav">
-                <div class="school-logo">Elixir <i class="fas fa-leaf" style="font-size: 1rem;"></i> International</div>
-                <div style="display:flex; gap:20px; color: #d1d5db;">
-                    <span>Academics</span>
-                    <span>Campus</span>
-                    <span style="color:var(--school-accent)">Apply Now</span>
-                </div>
+        <!-- ==================== SCHOOL PAGE ==================== -->
+        <section id="school-page" style="display: none;">
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb school-breadcrumb" aria-label="Breadcrumb">
+                <a href="#" onclick="showGateway(); return false;">Home</a>
+                <i class="fas fa-chevron-right"></i>
+                <span>School</span>
             </nav>
 
+            <nav class="school-nav">
+                <div class="school-logo">Elixir <i class="fas fa-leaf"></i> International</div>
+                <div class="nav-links">
+                    <a href="#school-facilities" class="nav-link">Facilities</a>
+                    <a href="#school-academics" class="nav-link">Academics</a>
+                    <a href="#school-admissions" class="nav-link">Admissions</a>
+                    <a href="#school-events" class="nav-link">Events</a>
+                    <button class="nav-cta school-cta" onclick="openModal('inquiryModal')">Apply Now</button>
+                </div>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu('school')" aria-label="Toggle menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+
+            <!-- School Accreditation Badges -->
+            <div class="accreditation-bar school-accred">
+                <div class="accreditation-content">
+                    <span class="accred-label">Accredited By:</span>
+                    <div class="accred-badges">
+                        <div class="accred-badge" title="CBSE Affiliated">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>CBSE</span>
+                        </div>
+                        <div class="accred-badge" title="IB World School">
+                            <i class="fas fa-globe"></i>
+                            <span>IB World</span>
+                        </div>
+                        <div class="accred-badge" title="Cambridge International">
+                            <i class="fas fa-university"></i>
+                            <span>Cambridge</span>
+                        </div>
+                        <div class="accred-badge" title="NAAC A++ Accredited">
+                            <i class="fas fa-star"></i>
+                            <span>NAAC A++</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Section -->
             <div class="school-hero">
                 <div class="hero-content">
                     <h2>Where Tradition Meets Innovation</h2>
-                    <p style="font-size: 1.2rem; margin-bottom: 30px; opacity: 0.9;">
-                        A sprawling 20-acre campus dedicated to creating global citizens with strong moral values.
-                    </p>
-                    <button style="background:var(--school-gold); border:none; padding: 15px 40px; font-weight:bold; cursor:pointer;">Virtual Tour</button>
+                    <p>A sprawling 20-acre campus dedicated to creating global citizens with strong moral values.</p>
+                    <div class="hero-cta-group">
+                        <button class="primary-btn school-primary" onclick="openVirtualTour()"><i class="fas fa-vr-cardboard"></i> Virtual Tour</button>
+                        <button class="secondary-btn school-secondary" onclick="openModal('inquiryModal')"><i class="fas fa-user-plus"></i> Apply Now</button>
+                    </div>
                 </div>
             </div>
 
+            <!-- Achievement Stats -->
+            <section class="school-stats">
+                <div class="stat-item" data-count="20">
+                    <div class="stat-number">0+</div>
+                    <div class="stat-label">Acre Campus</div>
+                </div>
+                <div class="stat-item" data-count="2500">
+                    <div class="stat-number">0+</div>
+                    <div class="stat-label">Students</div>
+                </div>
+                <div class="stat-item" data-count="150">
+                    <div class="stat-number">0+</div>
+                    <div class="stat-label">Faculty Members</div>
+                </div>
+                <div class="stat-item" data-count="25">
+                    <div class="stat-number">0+</div>
+                    <div class="stat-label">Years of Excellence</div>
+                </div>
+            </section>
+
+            <!-- Values Section -->
             <div class="values-section">
-                <div style="text-align:center; margin-bottom: 50px;">
-                    <span style="color:var(--school-accent); font-weight:bold; letter-spacing:2px;">WHY ELIXIR SCHOOL?</span>
-                    <h2 style="font-size: 2.5rem; margin-top:10px; font-family:'Georgia', serif;">The Holistic Edge</h2>
+                <div class="section-header school-header">
+                    <span class="section-tag school-tag">WHY ELIXIR SCHOOL?</span>
+                    <h2>The Holistic Edge</h2>
                 </div>
                 <div class="value-grid">
                     <div class="value-card">
                         <i class="fas fa-book-reader"></i>
                         <h3>Global Curriculum</h3>
-                        <p style="color:#a3b3ac">IB and CBSE integrated curriculum focusing on critical thinking.</p>
+                        <p>IB and CBSE integrated curriculum focusing on critical thinking.</p>
                     </div>
                     <div class="value-card">
                         <i class="fas fa-running"></i>
                         <h3>Sports Excellence</h3>
-                        <p style="color:#a3b3ac">Olympic-standard swimming pool, athletic tracks, and football turf.</p>
+                        <p>Olympic-standard swimming pool, athletic tracks, and football turf.</p>
                     </div>
                     <div class="value-card">
                         <i class="fas fa-hands-helping"></i>
                         <h3>Value Education</h3>
-                        <p style="color:#a3b3ac">Regular workshops on ethics, empathy, and community service.</p>
+                        <p>Regular workshops on ethics, empathy, and community service.</p>
                     </div>
                 </div>
             </div>
+
+            <!-- Facilities Gallery -->
+            <section id="school-facilities" class="facilities-section">
+                <div class="section-header school-header">
+                    <span class="section-tag school-tag">WORLD-CLASS</span>
+                    <h2>Our Facilities</h2>
+                </div>
+                <div class="facilities-grid">
+                    <div class="facility-card" onclick="openLightbox('Smart Classrooms', 'State-of-the-art classrooms with interactive boards, AC, and modern furniture.')">
+                        <div class="facility-icon"><i class="fas fa-chalkboard"></i></div>
+                        <h4>Smart Classrooms</h4>
+                        <p>Interactive learning spaces</p>
+                    </div>
+                    <div class="facility-card" onclick="openLightbox('Science Labs', 'Fully equipped Physics, Chemistry, Biology, and Computer labs.')">
+                        <div class="facility-icon"><i class="fas fa-flask"></i></div>
+                        <h4>Science Labs</h4>
+                        <p>Hands-on experiments</p>
+                    </div>
+                    <div class="facility-card" onclick="openLightbox('Library', '50,000+ books, digital resources, and quiet study zones.')">
+                        <div class="facility-icon"><i class="fas fa-book"></i></div>
+                        <h4>Library</h4>
+                        <p>50,000+ books</p>
+                    </div>
+                    <div class="facility-card" onclick="openLightbox('Sports Complex', 'Olympic pool, football field, basketball courts, and indoor games.')">
+                        <div class="facility-icon"><i class="fas fa-futbol"></i></div>
+                        <h4>Sports Complex</h4>
+                        <p>Multi-sport facilities</p>
+                    </div>
+                    <div class="facility-card" onclick="openLightbox('Auditorium', '1000-seat auditorium with professional sound and lighting.')">
+                        <div class="facility-icon"><i class="fas fa-theater-masks"></i></div>
+                        <h4>Auditorium</h4>
+                        <p>1000 seat capacity</p>
+                    </div>
+                    <div class="facility-card" onclick="openLightbox('Cafeteria', 'Hygienic food court with nutritious meal options.')">
+                        <div class="facility-icon"><i class="fas fa-utensils"></i></div>
+                        <h4>Cafeteria</h4>
+                        <p>Nutritious meals</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Virtual Tour Section -->
+            <section class="virtual-tour-section">
+                <div class="tour-content">
+                    <h3><i class="fas fa-vr-cardboard"></i> Experience Our Campus</h3>
+                    <p>Take a 360° virtual tour of our beautiful campus from the comfort of your home</p>
+                    <div class="tour-preview">
+                        <div class="tour-placeholder">
+                            <i class="fas fa-play-circle"></i>
+                            <span>Click to start virtual tour</span>
+                        </div>
+                    </div>
+                    <button class="tour-btn" onclick="openVirtualTour()">Start Virtual Tour</button>
+                </div>
+            </section>
+
+            <!-- Academics Section -->
+            <section id="school-academics" class="academics-section">
+                <div class="section-header school-header">
+                    <span class="section-tag school-tag">CURRICULUM</span>
+                    <h2>Academic Programs</h2>
+                </div>
+                <div class="academics-grid">
+                    <div class="academic-card">
+                        <div class="academic-badge">CBSE</div>
+                        <h3>Central Board</h3>
+                        <p>Comprehensive CBSE curriculum from Nursery to Class 12 with focus on conceptual learning.</p>
+                        <ul>
+                            <li><i class="fas fa-check"></i> NCERT-based teaching</li>
+                            <li><i class="fas fa-check"></i> Regular assessments</li>
+                            <li><i class="fas fa-check"></i> Board exam preparation</li>
+                        </ul>
+                    </div>
+                    <div class="academic-card featured">
+                        <div class="academic-badge">IB</div>
+                        <h3>International Baccalaureate</h3>
+                        <p>Globally recognized IB program developing inquiring, knowledgeable, and caring young people.</p>
+                        <ul>
+                            <li><i class="fas fa-check"></i> PYP, MYP & DP programs</li>
+                            <li><i class="fas fa-check"></i> International exposure</li>
+                            <li><i class="fas fa-check"></i> University preparation</li>
+                        </ul>
+                    </div>
+                    <div class="academic-card">
+                        <div class="academic-badge">IGCSE</div>
+                        <h3>Cambridge International</h3>
+                        <p>Cambridge IGCSE preparing students for global higher education opportunities.</p>
+                        <ul>
+                            <li><i class="fas fa-check"></i> International standards</li>
+                            <li><i class="fas fa-check"></i> Flexible subject choices</li>
+                            <li><i class="fas fa-check"></i> Global recognition</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Admission Process -->
+            <section id="school-admissions" class="admissions-section">
+                <div class="section-header school-header">
+                    <span class="section-tag school-tag">JOIN US</span>
+                    <h2>Admission Process</h2>
+                </div>
+                <div class="admission-timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-number">1</div>
+                        <div class="timeline-content">
+                            <h4>Online Application</h4>
+                            <p>Fill the online form with student and parent details</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-number">2</div>
+                        <div class="timeline-content">
+                            <h4>Document Submission</h4>
+                            <p>Upload required documents and pay application fee</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-number">3</div>
+                        <div class="timeline-content">
+                            <h4>Entrance Assessment</h4>
+                            <p>Age-appropriate assessment and interaction</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-number">4</div>
+                        <div class="timeline-content">
+                            <h4>Parent Interview</h4>
+                            <p>Meet with school counselors and administrators</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-number">5</div>
+                        <div class="timeline-content">
+                            <h4>Admission Confirmation</h4>
+                            <p>Complete fee payment and enrollment</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="admission-cta">
+                    <button class="primary-btn school-primary" onclick="openModal('inquiryModal')">
+                        <i class="fas fa-file-alt"></i> Start Application
+                    </button>
+                </div>
+            </section>
+
+            <!-- Events Calendar -->
+            <section id="school-events" class="events-section">
+                <div class="section-header school-header">
+                    <span class="section-tag school-tag">UPCOMING</span>
+                    <h2>Events Calendar</h2>
+                </div>
+                <div class="events-timeline">
+                    <div class="event-card">
+                        <div class="event-date">
+                            <span class="day">15</span>
+                            <span class="month">Jan</span>
+                        </div>
+                        <div class="event-details">
+                            <h4>Open House 2025</h4>
+                            <p>Campus tour and interaction with faculty</p>
+                            <span class="event-time"><i class="fas fa-clock"></i> 10:00 AM - 2:00 PM</span>
+                        </div>
+                    </div>
+                    <div class="event-card">
+                        <div class="event-date">
+                            <span class="day">26</span>
+                            <span class="month">Jan</span>
+                        </div>
+                        <div class="event-details">
+                            <h4>Republic Day Celebration</h4>
+                            <p>Cultural programs and flag hoisting ceremony</p>
+                            <span class="event-time"><i class="fas fa-clock"></i> 8:00 AM - 12:00 PM</span>
+                        </div>
+                    </div>
+                    <div class="event-card">
+                        <div class="event-date">
+                            <span class="day">10</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="event-details">
+                            <h4>Annual Sports Day</h4>
+                            <p>Inter-house competitions and athletics</p>
+                            <span class="event-time"><i class="fas fa-clock"></i> 9:00 AM - 5:00 PM</span>
+                        </div>
+                    </div>
+                    <div class="event-card">
+                        <div class="event-date">
+                            <span class="day">28</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="event-details">
+                            <h4>Science Exhibition</h4>
+                            <p>Student projects and innovations showcase</p>
+                            <span class="event-time"><i class="fas fa-clock"></i> 10:00 AM - 4:00 PM</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Parent Testimonials -->
+            <section class="parent-testimonials">
+                <div class="section-header school-header">
+                    <span class="section-tag school-tag">TESTIMONIALS</span>
+                    <h2>What Parents Say</h2>
+                </div>
+                <div class="testimonials-slider">
+                    <div class="parent-testimonial active">
+                        <div class="testimonial-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <blockquote>"The holistic development approach at Elixir School has transformed my child. The teachers are dedicated and the facilities are world-class."</blockquote>
+                        <div class="parent-info">
+                            <strong>Mrs. Sharma</strong>
+                            <span>Parent of Class 8 student</span>
+                        </div>
+                    </div>
+                    <div class="parent-testimonial">
+                        <div class="testimonial-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <blockquote>"Best decision we made for our children's education. The IB program has opened global opportunities for my daughter."</blockquote>
+                        <div class="parent-info">
+                            <strong>Mr. & Mrs. Patel</strong>
+                            <span>Parents of IB Diploma student</span>
+                        </div>
+                    </div>
+                    <div class="parent-testimonial">
+                        <div class="testimonial-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <blockquote>"The sports facilities and extracurricular activities have helped my son discover his passion for swimming. He's now a state-level champion!"</blockquote>
+                        <div class="parent-info">
+                            <strong>Dr. Reddy</strong>
+                            <span>Parent of Class 10 student</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-dots">
+                    <span class="dot active" onclick="showTestimonial(0)"></span>
+                    <span class="dot" onclick="showTestimonial(1)"></span>
+                    <span class="dot" onclick="showTestimonial(2)"></span>
+                </div>
+            </section>
+
+            <!-- School FAQ -->
+            <section class="faq-section school-faq">
+                <div class="section-header school-header">
+                    <span class="section-tag school-tag">FAQ</span>
+                    <h2>Frequently Asked Questions</h2>
+                </div>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <button class="faq-question school-faq-btn" onclick="toggleFaq(this)" aria-expanded="false">
+                            <span>What is the admission age criteria?</span>
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>For Nursery, the child should be 3+ years as of March 31st of the admission year. For other classes, age-appropriate criteria apply. Please contact admissions for specific requirements.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question school-faq-btn" onclick="toggleFaq(this)" aria-expanded="false">
+                            <span>Do you provide transportation?</span>
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes, we have a fleet of GPS-enabled buses covering all major areas. Routes are planned for student convenience with trained attendants on each bus.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question school-faq-btn" onclick="toggleFaq(this)" aria-expanded="false">
+                            <span>What extracurricular activities are offered?</span>
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>We offer 30+ activities including music, dance, art, robotics, coding, debate, MUN, sports (swimming, football, basketball, cricket), yoga, and more.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question school-faq-btn" onclick="toggleFaq(this)" aria-expanded="false">
+                            <span>What is the student-teacher ratio?</span>
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>We maintain a 15:1 student-teacher ratio to ensure personalized attention. Class sizes are capped at 25 students for optimal learning.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Location Map -->
+            <section class="location-section">
+                <div class="section-header school-header">
+                    <span class="section-tag school-tag">VISIT US</span>
+                    <h2>Our Location</h2>
+                </div>
+                <div class="location-content">
+                    <div class="map-container">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.5!2d77.5!3d12.9!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTLCsDU0JzAwLjAiTiA3N8KwMzAnMDAuMCJF!5e0!3m2!1sen!2sin!4v1234567890"
+                            width="100%" 
+                            height="400" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy"
+                            title="School Location Map">
+                        </iframe>
+                    </div>
+                    <div class="location-info">
+                        <h4><i class="fas fa-map-marker-alt"></i> Address</h4>
+                        <p>Elixir International School<br>123 Education Boulevard<br>Knowledge City - 560001</p>
+                        <h4><i class="fas fa-phone"></i> Contact</h4>
+                        <p>+91 98765 43210<br>admissions@elixirschool.edu</p>
+                        <h4><i class="fas fa-clock"></i> Office Hours</h4>
+                        <p>Mon - Sat: 8:00 AM - 4:00 PM</p>
+                        <button class="directions-btn" onclick="window.open('https://maps.google.com', '_blank')">
+                            <i class="fas fa-directions"></i> Get Directions
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Newsletter Section -->
+            <section class="newsletter-section school-newsletter">
+                <div class="newsletter-content">
+                    <h3><i class="fas fa-newspaper"></i> School Newsletter</h3>
+                    <p>Stay connected with school updates, events, and achievements</p>
+                    <form class="newsletter-form" onsubmit="subscribeNewsletter(event, 'school')">
+                        <input type="email" placeholder="Enter your email" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- School Footer -->
+            <footer class="school-footer">
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <h4>Elixir International School</h4>
+                        <p>Nurturing minds, building character, creating leaders since 1999.</p>
+                        <div class="social-links">
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="#school-facilities">Facilities</a></li>
+                            <li><a href="#school-academics">Academics</a></li>
+                            <li><a href="#school-admissions">Admissions</a></li>
+                            <li><a href="#school-events">Events</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Programs</h4>
+                        <ul>
+                            <li><a href="#">CBSE Curriculum</a></li>
+                            <li><a href="#">IB Program</a></li>
+                            <li><a href="#">IGCSE</a></li>
+                            <li><a href="#">Pre-Primary</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Contact Us</h4>
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Education Boulevard</p>
+                        <p><i class="fas fa-phone"></i> +91 98765 43210</p>
+                        <p><i class="fas fa-envelope"></i> info@elixirschool.edu</p>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Elixir International School. All rights reserved.</p>
+                </div>
+            </footer>
         </section>
 
     </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightboxModal" class="modal hidden">
+        <div class="modal-overlay" onclick="closeModal('lightboxModal')"></div>
+        <div class="lightbox-content">
+            <button class="modal-close" onclick="closeModal('lightboxModal')" aria-label="Close"><i class="fas fa-times"></i></button>
+            <h3 id="lightboxTitle"></h3>
+            <div class="lightbox-image">
+                <i class="fas fa-image fa-5x"></i>
+            </div>
+            <p id="lightboxDesc"></p>
+        </div>
+    </div>
+
+    <!-- Virtual Tour Modal -->
+    <div id="tourModal" class="modal hidden">
+        <div class="modal-overlay" onclick="closeModal('tourModal')"></div>
+        <div class="tour-modal-content">
+            <button class="modal-close" onclick="closeModal('tourModal')" aria-label="Close"><i class="fas fa-times"></i></button>
+            <h3><i class="fas fa-vr-cardboard"></i> Virtual Campus Tour</h3>
+            <div class="tour-viewer">
+                <div class="tour-placeholder-large">
+                    <i class="fas fa-360-degrees fa-4x"></i>
+                    <p>360° Virtual Tour</p>
+                    <span>Use mouse to look around</span>
+                </div>
+            </div>
+            <div class="tour-navigation">
+                <button class="tour-nav-btn active" data-location="entrance">Main Entrance</button>
+                <button class="tour-nav-btn" data-location="classroom">Classrooms</button>
+                <button class="tour-nav-btn" data-location="library">Library</button>
+                <button class="tour-nav-btn" data-location="sports">Sports Complex</button>
+                <button class="tour-nav-btn" data-location="cafeteria">Cafeteria</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress" id="scrollProgress"></div>
 
     <script src="script.js"></script>
 </body>
